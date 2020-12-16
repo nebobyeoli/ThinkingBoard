@@ -51,29 +51,37 @@ body > div#body-fill {
     color: var(--title);
 }
 
-fieldset {
-    font-size: .8em;
+form table {
+    font-size: .7em;
     margin: 1em 0 2.2em 0;
     padding: 0;
+}
+
+input[type=checkbox] {
+    margin: 0 2.2em 0 0.8em; /* top, right, bottom, left */
+    transform: scale(1.7);
+}
+
+form table td {
+    height: 1.6em;
 }
 
 input, textarea, button {
     font-family: SeoulNamsan;
     font-size: .8em;
     font-weight: 200;
-    color: var(--p);
+    color: var(--pre-text);
     padding: 1rem;
     margin: 2rem 1rem 3rem 0;
-}
-
-input[type=checkbox] {
-    margin: 0 2em 0 .8em;
-    transform: scale(1.8);
 }
 
 input:focus, textarea:focus, button:focus {
     box-shadow: .2em .2em .3em rgba(208, 91, 132, 0.6);
     transition: 200ms ease-in-out;
+}
+
+textarea {
+    color: indianred;
 }
 
 button {

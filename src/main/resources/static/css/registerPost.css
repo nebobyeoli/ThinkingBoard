@@ -5,6 +5,7 @@ body {
 
 p {
     width: max-content;
+    font-weight: 300;
     color: var(--p);
     margin: 0;
 }

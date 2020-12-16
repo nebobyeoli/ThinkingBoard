@@ -15,12 +15,31 @@
     <input type="text" name="title" class="paper" required><br>
 
     <p>카테고리</p>
-    <fieldset>
-        의식의 흐름<input type="checkbox" name="category" value="의식의 흐름" checked>
-        유머<input type="checkbox" name="category" value="유머">
-        인생은...<input type="checkbox" name="category" value="인생은...">
-        생활 야담<input type="checkbox" name="category" value="생활 야담">
-    </fieldset>
+    <table class="catboxes">
+        <tr>
+            <td class="catbox checked">의식의 흐름</td>
+            <td class="catbox">유머</td>
+            <td class="catbox">생활 야담</td>
+            <td class="catbox">인생은...</td>
+        </tr>
+        <tr>
+            <td class="catbox">불현듯 스친</td>
+            <td class="catbox">고민</td>
+            <td class="catbox">고백</td>
+            <td class="catbox">독백</td>
+        </tr>
+        <tr>
+            <td class="catbox">공부</td>
+            <td class="catbox">꿈</td>
+            <td class="catbox">명언</td>
+            <td class="catbox">토닥토닥</td>
+        </tr>
+        <tr>
+            <td class="catbox">맛있는</td>
+            <td class="catbox">비밀</td>
+        </tr>
+    </tr>
+    </table>
 
     <p>게시글 내용</p>
     <textarea name="contents" cols="30" rows="10" class="paper" required></textarea><br>
@@ -28,5 +47,6 @@
 </form>
 
 <script src="/scripts/script.js"></script>
+<script src="/scripts/registerPost.js"></script>
 </body>
 </html>
