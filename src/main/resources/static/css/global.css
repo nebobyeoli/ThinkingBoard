@@ -53,13 +53,8 @@ body > div#body-fill {
 
 form table {
     font-size: .7em;
-    margin: 1em 0 2.2em 0;
+    margin: 1.5em 0 0.5em 0;
     padding: 0;
-}
-
-input[type=checkbox] {
-    margin: 0 2.2em 0 0.8em; /* top, right, bottom, left */
-    transform: scale(1.7);
 }
 
 form table td {
@@ -72,7 +67,7 @@ input, textarea, button {
     font-weight: 200;
     color: var(--pre-text);
     padding: 1rem;
-    margin: 2rem 1rem 3rem 0;
+    margin: 2rem 1rem 1rem 0;
 }
 
 input:focus, textarea:focus, button:focus {
@@ -80,8 +75,22 @@ input:focus, textarea:focus, button:focus {
     transition: 200ms ease-in-out;
 }
 
+input[type=checkbox] {
+    margin: 0 2.2em 0 0.8em; /* top, right, bottom, left */
+    transform: scale(1.7);
+}
+
+input[type=password] {
+    margin: 0 0 1em 0.6em;
+    padding: 0.5em;
+}
+
 textarea {
     color: indianred;
+}
+
+button, input[type=submit][type=button] {
+    cursor: pointer;
 }
 
 button {
@@ -151,6 +160,25 @@ p.redir:hover {
     text-decoration: underline dotted;
     text-underline-position: under;
     -ms-text-underline-position: under;
+}
+
+div.formarea {
+    scroll-margin: 2rem;
+}
+
+p.invalid {
+    font-size: .8em;
+    font-weight: 300;
+    color: red;
+    display: flex;
+    align-items: center;
+    margin: .5rem 0 2rem 0;
+}
+
+p.invalid svg {
+    margin-right: .4em;
+    width: 1.2em;
+    fill: red;
 }
 
 pre b {

@@ -25,3 +25,22 @@ document.body.addEventListener('click', e => {
         window.open(href, '_self');
     }
 });
+
+function createSVG(attributes = {}, path_ds = [], path_fills = [], path_strokes = []) {
+    let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    Object.entries(attributes).map(attr => svg.setAttribute(attr[0], attr[1]));
+
+    if (path_ds) path_ds.forEach((dss, i) => {
+
+        let path = document.createElementNS(svg.namespaceURI, 'path');
+
+        path.setAttribute('d', dss);
+
+        if (path_fills[i]) path.setAttribute('fill', path_fills[i]);
+        if (path_strokes[i]) path.setAttribute('stroke', path_strokes[i]);
+
+        svg.appendChild(path);
+    });
+
+    return svg;
+}

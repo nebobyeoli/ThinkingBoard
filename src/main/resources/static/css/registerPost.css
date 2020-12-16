@@ -1,11 +1,27 @@
 body {
     font-size: 2rem;
-    padding: 2rem;
+    padding: 2rem; /* top, side, bottom */
 }
 
 p {
     width: max-content;
-    font-weight: 300;
+    font-weight: 400;
     color: var(--p);
     margin: 0;
+}
+
+input[type=text] {
+    width: 18em;
+}
+
+div.formarea {
+    margin-bottom: 4.4rem;
+}
+
+div.formarea.password {
+    margin-bottom: 1em;
+}
+
+div.formarea.password span {
+    font-size: 0.8em;
 }
