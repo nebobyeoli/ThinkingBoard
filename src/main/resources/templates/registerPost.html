@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>생각판 | 새 게시글 작성</title>
+    <link rel="stylesheet" href="/css/fonts.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/registerPost.css">
+</head>
+<body>
+
+<form action="/posts/new" method="post">
+    <p>게시글 제목</p>
+    <input type="text" name="title" class="paper" required><br>
+    <p>게시글 내용:</p>
+    <textarea name="contents" cols="30" rows="10" class="paper" required></textarea><br>
+    <button type="submit">글 올리기</button>
+</form>
+
+<script src="/scripts/script.js"></script>
+</body>
+</html>

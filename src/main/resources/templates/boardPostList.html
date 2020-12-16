@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/css/fonts.css">
+<link rel="stylesheet" href="/css/global.css">
+<head>
+    <meta charset="UTF-8">
+    <title>생각판 | 게시판 보기</title>
+</head>
+<body>
+
+<div th:each="post : ${postList}" class="paper post">
+    <h2 th:text="'#' + ${post.getId()} + '번째 생각'"></h2>
+    <h3 th:text="${post.getTitle()}"></h3>
+    <p  th:text="${post.getContents()}"></p>
+</div>
+
+<script src="/scripts/script.js"></script>
+</body>
+</html>

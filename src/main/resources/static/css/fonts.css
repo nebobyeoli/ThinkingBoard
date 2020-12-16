@@ -1,0 +1,25 @@
+@font-face {
+    font-family: "Consolas";
+    src: url("/fonts/consola.ttf");
+}
+
+@font-face {
+    font-family: "SeoulNamsan";
+    src: url("/fonts/SeoulNamsan/SeoulNamsanEB.otf");
+    font-weight: 400;
+}
+@font-face {
+    font-family: "ss";
+    src: url("/fonts/SeoulNamsan/SeoulNamsanB.otf");
+    font-weight: 300;
+}
+@font-face {
+    font-family: "ss";
+    src: url("/fonts/SeoulNamsan/SeoulNamsanM.otf");
+    font-weight: 200;
+}
+@font-face {
+    font-family: "ss";
+    src: url("/fonts/SeoulNamsan/SeoulNamsanL.otf");
+    font-weight: 100;
+}

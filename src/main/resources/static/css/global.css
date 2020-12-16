@@ -1,0 +1,185 @@
+* {
+    outline: 0;
+    border: 0;
+}
+
+body {
+    font-family: SeoulNamsan;
+    font-weight: 200;
+    font-size: 1.4rem;
+
+    --body-text: rgb(99, 0, 10);
+
+    color: var(--body-text);
+
+    --radius: .6em;
+    --paper: rgb(255, 232, 229);
+
+    --title : rgb(143, 0, 62);
+    --p     : rgb(177, 0, 24);
+
+    --pre-background   : rgba(255, 0, 120, .1);
+    --pre-text         : rgb(131, 0, 76);
+}
+
+body > div#body-fill {
+    /* body background filling element */
+    position: fixed;
+    top: 0; left: 0;
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+
+    --color1 : 250, 220, 220;
+    --color2 : 240, 160, 180;
+    --cover  : 15%;
+    --size   : 8%;
+
+    border: 0;
+	background:
+		linear-gradient(135deg, rgb(var(--color1)) var(--cover), transparent),
+		repeating-linear-gradient(45deg,  rgba(var(--color1), 1)   0%, rgba(var(--color2), .6) var(--size), transparent var(--size), transparent 10%),
+        repeating-linear-gradient(-45deg, rgba(var(--color1), .4) 0%, rgba(var(--color2), .5) var(--size), transparent var(--size), transparent 10%),
+	    rgba(var(--color1), .4);
+}
+
+.title {
+    color: var(--title);
+}
+
+input, textarea, button {
+    font-family: SeoulNamsan;
+    font-size: .8em;
+    font-weight: 200;
+    color: var(--p);
+    padding: 1rem;
+    margin: 2rem 1rem 3rem 0;
+}
+
+input:focus, textarea:focus, button:focus {
+    box-shadow: .2em .2em .3em rgba(208, 91, 132, 0.6);
+    transition: 200ms ease-in-out;
+}
+
+button {
+    background-color: var(--pre-background);
+    color: var(--pre-text);
+    border-radius: var(--radius);
+    padding: 2rem;
+    margin: 0;
+}
+
+button, .paper {
+    box-shadow: .1em .3em .5em rgb(215, 163, 163);
+}
+
+.paper {
+    background-color: var(--paper);
+    border: 0;
+    border-radius: var(--radius);
+}
+
+div.post > h2 {
+    margin-top: 0;
+}
+div.post > p {
+    margin-bottom: 0;
+}
+div.post > h3 {
+    margin-top: .8em;
+    margin-bottom: .8em;
+}
+
+div.post {
+    position: relative;
+    max-width: 16rem;
+    height: max-content;
+
+    margin: 2rem;
+    padding: 1.4em;
+    font-size: .8em;
+}
+
+h1, h2 {
+    font-weight: 400;
+}
+
+h3 {
+    font-weight: 300;
+    color: var(--p);
+}
+
+p {
+    font-weight: 200;
+    color: indianred;
+    position: relative;
+}
+
+b {
+    font-weight: 400;
+}
+
+p.redir {
+    cursor: pointer;
+    scroll-margin: 1.2em;
+}
+
+p.redir:hover {
+    text-decoration: underline dotted;
+    text-underline-position: under;
+    -ms-text-underline-position: under;
+}
+
+pre b {
+    font-family: "SeoulNamsan";
+}
+
+pre {
+    font-family: Consolas, SeoulNamsan;
+    font-weight: 100;
+    font-size: .84rem;
+
+    line-height: 1rem;
+    border-radius: .3em;
+
+    display: inline-block;
+    margin: .2em;
+    padding: .25em;
+
+    background-color: var(--pre-background);
+    color: var(--pre-text);
+}
+
+pre.block {
+    padding: .7em;
+    border-radius: .5em;
+}
+
+pre.goto {
+    color: var(--p);
+    background-color: rgba(255, 0, 34, 0.12);
+    border-radius: 5em;
+    padding: 0.8em;
+    font-size: 1em;
+}
+
+p > pre.goto {
+    position: absolute;
+    margin-left: 1rem;
+    bottom: 0;
+
+    border-radius: .5em;
+    padding: 0.2em;
+    font-size: 0.5em;
+}
+
+.no-select {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

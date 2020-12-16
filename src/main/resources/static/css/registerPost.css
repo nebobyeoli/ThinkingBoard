@@ -1,0 +1,10 @@
+body {
+    font-size: 2rem;
+    padding: 2rem;
+}
+
+p {
+    width: max-content;
+    color: var(--p);
+    margin: 0;
+}

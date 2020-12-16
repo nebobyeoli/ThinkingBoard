@@ -1,0 +1,32 @@
+plugins {
+	id "org.springframework.boot" version "2.4.0"
+	id "io.spring.dependency-management" version "1.0.10.RELEASE"
+	id "java"
+}
+
+group = "dimigo.hee"
+version = "0.0.1-SNAPSHOT"
+sourceCompatibility = "11"
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
+	implementation "org.springframework.boot:spring-boot-starter-web"
+	implementation "org.projectlombok:lombok:1.18.16"
+	developmentOnly "org.springframework.boot:spring-boot-devtools"
+	testImplementation "org.springframework.boot:spring-boot-starter-test"
+
+	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+	compile "mysql:mysql-connector-java"
+
+//	// "Security" -- 리소스 파일 접근 제한
+//	implementation "org.springframework.boot:spring-boot-starter-security"
+//	implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity5"
+}
+
+test {
+	useJUnitPlatform()
+}
