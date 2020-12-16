@@ -11,8 +11,8 @@ public class Boardpost
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; // 게시글 번호 - 고유 id
     private String title; // 게시글 제목
-    private String contents; // 게시글 내용
     private String category; // 게시글 카테고리
+    private String contents; // 게시글 내용
 
     public int getId() {
         return id;
@@ -30,19 +30,19 @@ public class Boardpost
         this.title = title;
     }
 
-    public String getContents() {
-        return contents;
-    }
-
-    public void setContents(String contents) {
-        this.contents = contents;
-    }
-
     public String getCategory() {
         return category;
     }
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
     }
 }
