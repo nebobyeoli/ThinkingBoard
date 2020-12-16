@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:inline="text">
+
 <link rel="stylesheet" href="/css/fonts.css">
 <link rel="stylesheet" href="/css/global.css">
 <head>
@@ -9,11 +10,13 @@
 <body>
 
 <div th:each="post : ${postList}" class="paper post">
-    <h2 th:text="'#' + ${post.getId()} + '번째 생각'"></h2>
-    <h3 th:text="${post.getTitle()}"></h3>
-    <p  th:text="${post.getContents()}"></p>
+    <h2 th:text="'#' + ${post.getId()} + '번째 생각'" name="post-id"></h2>
+    <h3 th:text="${post.getTitle()}" name="post-title"></h3>
+    <span th:text="${post.getCategory()}" name="post-category"></span>
+    <p th:text="${post.getContents()}" name="post-contents"></p>
 </div>
 
 <script src="/scripts/script.js"></script>
 </body>
+<script src="/scripts/boardPostList.js"></script>
 </html>

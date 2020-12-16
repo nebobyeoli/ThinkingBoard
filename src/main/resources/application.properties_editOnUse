@@ -5,7 +5,6 @@
 server.address=localhost
 server.port=8888
 
-se
 #spring.mvc.static-path-pattern=/resources/**
 #spring.jpa.mapping-resources=
 
@@ -16,7 +15,7 @@ spring.jpa.database=mysql
 
 spring.datasource.url=jdbc:mysql://localhost:3306/dimigo?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
 spring.datasource.username=root
-spring.datasource.password=Dorky17!
+spring.datasource.password=PASSWORD
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 # CamelCase 테이블명에 "_" 자동 삽입 방지

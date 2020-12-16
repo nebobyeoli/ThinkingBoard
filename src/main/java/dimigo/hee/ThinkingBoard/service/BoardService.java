@@ -22,7 +22,6 @@ public class BoardService
     public int register(Boardpost boardPost) {
         boardRepository.save(boardPost);
         return boardPost.getId();
-
     }
 
     public ArrayList<Boardpost> findAllPosts() {

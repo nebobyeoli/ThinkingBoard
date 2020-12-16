@@ -30,6 +30,7 @@ public class BoardController
         Boardpost bp = new Boardpost(); // 새 게시글
 
         bp.setTitle(postForm.getTitle());
+        bp.setCategory(postForm.getCategory());
         bp.setContents(postForm.getContents());
 
         boardService.register(bp);

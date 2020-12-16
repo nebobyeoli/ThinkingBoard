@@ -42,13 +42,19 @@ body > div#body-fill {
     border: 0;
 	background:
 		linear-gradient(135deg, rgb(var(--color1)) var(--cover), transparent),
-		repeating-linear-gradient(45deg,  rgba(var(--color1), 1)   0%, rgba(var(--color2), .6) var(--size), transparent var(--size), transparent 10%),
+		repeating-linear-gradient(45deg,  rgba(var(--color1), 1)  0%, rgba(var(--color2), .6) var(--size), transparent var(--size), transparent 10%),
         repeating-linear-gradient(-45deg, rgba(var(--color1), .4) 0%, rgba(var(--color2), .5) var(--size), transparent var(--size), transparent 10%),
 	    rgba(var(--color1), .4);
 }
 
 .title {
     color: var(--title);
+}
+
+fieldset {
+    font-size: .8em;
+    margin: 1em 0 2.2em 0;
+    padding: 0;
 }
 
 input, textarea, button {
@@ -58,6 +64,11 @@ input, textarea, button {
     color: var(--p);
     padding: 1rem;
     margin: 2rem 1rem 3rem 0;
+}
+
+input[type=checkbox] {
+    margin: 0 2em 0 .8em;
+    transform: scale(1.8);
 }
 
 input:focus, textarea:focus, button:focus {
@@ -140,14 +151,14 @@ pre b {
 
 pre {
     font-family: Consolas, SeoulNamsan;
-    font-weight: 100;
-    font-size: .84rem;
+    font-weight: 200;
+    font-size: .8em;
 
     line-height: 1rem;
     border-radius: .3em;
 
     display: inline-block;
-    margin: .2em;
+    margin: .25em;
     padding: .25em;
 
     background-color: var(--pre-background);
@@ -155,7 +166,7 @@ pre {
 }
 
 pre.block {
-    padding: .7em;
+    padding: .6em;
     border-radius: .5em;
 }
 

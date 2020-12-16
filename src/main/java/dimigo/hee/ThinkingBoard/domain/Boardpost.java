@@ -12,6 +12,7 @@ public class Boardpost
     private int id; // 게시글 번호 - 고유 id
     private String title; // 게시글 제목
     private String contents; // 게시글 내용
+    private String category; // 게시글 카테고리
 
     public int getId() {
         return id;
@@ -35,5 +36,13 @@ public class Boardpost
 
     public void setContents(String contents) {
         this.contents = contents;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

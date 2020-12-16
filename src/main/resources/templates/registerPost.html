@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:inline="text">
+
 <head>
     <meta charset="UTF-8">
     <title>생각판 | 새 게시글 작성</title>
@@ -12,7 +13,16 @@
 <form action="/posts/new" method="post">
     <p>게시글 제목</p>
     <input type="text" name="title" class="paper" required><br>
-    <p>게시글 내용:</p>
+
+    <p>카테고리</p>
+    <fieldset>
+        의식의 흐름<input type="checkbox" name="category" value="의식의 흐름" checked>
+        유머<input type="checkbox" name="category" value="유머">
+        인생은...<input type="checkbox" name="category" value="인생은...">
+        생활 야담<input type="checkbox" name="category" value="생활 야담">
+    </fieldset>
+
+    <p>게시글 내용</p>
     <textarea name="contents" cols="30" rows="10" class="paper" required></textarea><br>
     <button type="submit">글 올리기</button>
 </form>

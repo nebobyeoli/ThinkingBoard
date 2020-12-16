@@ -5,6 +5,7 @@ public class PostForm
 {
     private String title; // 게시글 제목
     private String contents; // 게시글 내용
+    private String category; // 해당하는 카테고리
 
     public String getTitle() {
         return title;
@@ -20,5 +21,19 @@ public class PostForm
 
     public void setContents(String contents) {
         this.contents = contents;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String[] category) {
+        this.category = String.join("/", category); // String array > 첫 번째 방법
+
+        // 두 번째 방법: BoardController.java > register 함수에서
+        // bp.setCategory(String.join("/", postForm.getCategory())); 설정
+
+        // 세 번째 방법: BoardService.java > register 에서
+        // boardPost.setCategory(String.join("/", postForm.getCategory())); 설정
     }
 }
