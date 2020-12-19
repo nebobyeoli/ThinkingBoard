@@ -4,16 +4,18 @@ const ppost = document.querySelectorAll('div.paper.post');
 const ppostCat = document.querySelectorAll('div.paper.post > span[name=post-category]');
 
 let postopt = {
-    expanded: [], // 옵션 선택자(⋮)에 사용되는 배열 -- 0: 안 열림, 1: 열림
+    active: [], // 옵션 선택자(⋮)가 열렸는지 저장하는 배열
     panel: i => document.querySelector(`div.paper.post div.postopt-panel._${i}`),
     panelAll: () => document.querySelectorAll('div.postopt-panel')
 };
 
-let deletePost = {
-    outer: document.querySelector('div.delPost'),
-    inpwd: document.querySelector('div.delPost input[name=password]'),
-    panel: document.querySelector('div.delPost div.delPost-form'),
-    fill: document.querySelector('div.delPost div.backfill')
+let modifyPost = {
+    active: false, // panel이 열려 있는 상태에서 Esc키 계속 누르고 있을 때 toggle이 계속 실행되는 것 방지
+    outer: document.querySelector('div.modPost'),
+    form: document.querySelector('div.modPost form'),
+    inpwd: document.querySelector('div.modPost input[name=password]'),
+    panel: document.querySelector('div.modPost div.modPost-form'),
+    fill: document.querySelector('div.modPost div.backfill')
 };
 
 document.body.addEventListener('click', e => {
@@ -25,7 +27,7 @@ document.body.addEventListener('click', e => {
 /*** for Object : postopt ***/
 
 for (let i = 0; i < ppost.length; i++) {
-    postopt.expanded.push(0);
+    postopt.active.push(false);
 }
 
 // 카테고리들을 화면에 나눠서 표시
@@ -48,44 +50,57 @@ ppost.forEach((post, i) => {
             <path d="M12,1.2V3c0,0.6-0.5,1.1-1.1,1.1H9.1C8.5,4.1,8,3.6,8,3V1.2c0-0.6,0.5-1.1,1.1-1.1h1.8C11.5,0.1,12,0.6,12,1.2z"></path>
         </svg>
         <div class="postopt-panel _${i}" style="display: none;">
-            <p onclick="editPost(${i})">글 수정</p>
-            <p onclick="deletePost.open(${i})">글 삭제</p>
+            <p onclick="modifyPost.edit(${i})">글 수정</p>
+            <p onclick="modifyPost.delete(${i})">글 삭제</p>
         </div>
     `;
 });
 
 postopt.closeAll = function () {
     this.panelAll().forEach(panel => panel.style.display = 'none');
-    this.expanded.fill(0);
+    this.active.fill(0);
 }
 
 postopt.toggle = function (i) {
-    let opened = this.expanded[i];
+    let opened = this.active[i];
     this.closeAll();
 
-    if (opened == 0) {
+    if (!opened) {
         this.panel(i).style.display = '';
-        this.expanded[i] = 1;
+        this.active[i] = true;
     }
     else {
         this.panel(i).style.display = 'none';
-        this.expanded[i] = 0;
+        this.active[i] = false;
     }
 }
 
-/*** for Object : editPost ***/
+/*** for Object : modifyPost ***/
 
-function editPost(i) {
-    postopt.closeAll();
-}
-
-/*** for Object : deletePost ***/
-
-deletePost.outer.addEventListener('keydown', e => {
-    if (e.keyCode == 27) deletePost.close(); // Esc key
+modifyPost.outer.addEventListener('keydown', e => {
+    if (e.keyCode == 27) modifyPost.close(); // Esc key
 });
 
-deletePost.open = function (i) {
+modifyPost.edit = function (i) {
+    this.outer.setAttribute('modify', 'edit');
+    this.form.action = '/posts/editOne';
+    document.querySelector('div.modPost button[type=submit]').innerHTML = '수정';
+    document.querySelector('div.modPost p.invalid').style.display = 'none';
+    this.open(i);
+}
+
+modifyPost.delete = function (i) {
+    this.outer.setAttribute('modify', 'delete');
+    // this.outer.modify = 'delete';
+    this.form.action = '/posts/deleteOne';
+    document.querySelector('div.modPost button[type=submit]').innerHTML = '삭제';
+    document.querySelector('div.modPost p.invalid').style.display = '';
+    this.open(i);
+}
+
+modifyPost.open = function (i) {
+    if (this.active) return;
+
     postopt.closeAll();
 
     this.outer.setAttribute('pk', i); // primary key -- id
@@ -96,9 +111,13 @@ deletePost.open = function (i) {
 
     this.outer.toggleAttribute('active');
     this.panel.toggleAttribute('active');
+
+    this.active = true;
 }
 
-deletePost.close = function () {
+modifyPost.close = function () {
+    if (!this.active) return;
+
     this.panel.toggleAttribute('active');
     this.outer.toggleAttribute('active');
 
@@ -106,4 +125,6 @@ deletePost.close = function () {
         this.fill.toggleAttribute('display');
         this.outer.toggleAttribute('display');
     }, transDur);
+
+    this.active = false;
 }

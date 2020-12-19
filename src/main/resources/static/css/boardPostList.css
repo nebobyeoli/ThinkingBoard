@@ -2,7 +2,7 @@
     transition: 500ms, opacity 400ms, top, left, width 0ms;
 }
 
-div.delPost { /* display, active */
+div.modPost { /* display, active */
     display: flex;
     position: fixed;
     top: -10000px; left: -10000px;
@@ -16,69 +16,92 @@ div.delPost { /* display, active */
     justify-content: center; /* horizontal */
 }
 
-div.delPost[display] {
+div.modPost[display] {
     top: 0; left: 0;
     width: 100%;
 }
 
-div.delPost[active] {
+div.modPost[active] {
     height: 100%;
     opacity: 1;
 }
 
-div.delPost div.backfill { /* display */
+div.modPost div.backfill { /* display */
     top: -10000px; left: -10000px;
     opacity: .8;
-    background-color: rgb(56, 39, 39);
+    background-color: rgb(40, 20, 20);
 }
 
-div.delPost div.backfill[display] {
+div.modPost div.backfill[display] {
     top: 0; left: 0;
 }
 
-div.delPost div.delPost-form { /* active */
-    background-color: var(--white);
+div.modPost div.modPost-form { /* active */
+    position: relative;
     max-width: 16rem;
     height: 0;
 
     font-size: .8em;
     margin: 2rem;
-    padding: 1.4em;
+    padding: 1.8em;
     overflow: hidden;
+    background-color: var(--white);
 }
 
-div.delPost div.delPost-form[active] {
-    height: 10.5em;
+div.modPost[modify=edit] div.modPost-form[active] {
+    height: 10.6em;
 }
 
-div.delPost input[type=password] {
-    margin: 1em 0 .5em 0;
-    width: 9em;
-    font-size: 1.2em;
+div.modPost[modify=delete] div.modPost-form[active] {
+    height: 12.4em;
 }
 
-div.delPost button {
-    width: 4em; height: 3em;
-    padding: 0; margin-right: .5em;
-}
-
-div.delPost-form p {
+div.modPost-form p {
     width: max-content;
     font-weight: 400;
     color: var(--p);
     margin: 0;
 }
 
-div.delPost-form p.invalid svg {
+div.modPost-form p.invalid svg {
     fill: red;
     margin-right: .4em;
 }
 
-div.delPost-form p.invalid {
+div.modPost-form p.invalid {
     font-size: .8em;
     font-weight: 300;
     color: red;
     display: flex;
     align-items: center;
-    margin: .6rem 0 1.4rem 0;
+    margin: .6rem 0 .6rem 0;
+}
+
+div.modPost div.invCase {
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    width: max-content;
+}
+
+div.modPost[modify=edit] div.invCase {
+    height: 3em;
+}
+
+div.modPost[modify=delete] div.invCase {
+    height: 4em;
+}
+
+div.modPost input[type=password] {
+    margin: 1em 0 .5em 0;
+    width: 9em;
+    font-size: 1.2em;
+}
+
+div.modPost button {
+    font-size: 1em;
+    width: 5em; height: 2.7em;
+
+    margin: 0 .8em 0 0;
+    padding: 0;
 }
