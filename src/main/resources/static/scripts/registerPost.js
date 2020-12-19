@@ -12,7 +12,9 @@ document.querySelectorAll('table.catboxes input[type=checkbox]').forEach((check,
     if (checked.includes(i)) check.setAttribute('checked', 'true');
 });
 
-let validate = {};
+// 주어진 form 입력이 입력 조건을 모두 충족하는지 확인
+
+let validate = { isValid: true };
 
 validate.invalPrint = function (areaname, alerttext) {
     if (validate.isValid) document.querySelector(`div.formarea.${areaname}`).scrollIntoView();
@@ -41,7 +43,7 @@ validate.title = function () {
         validate.invalPrint('title', '제목을 입력해 주세요.');
         return validate.isValid = false;
     }
-    return validate.isValid && true;
+    return validate.isValid === true;
 };
 
 validate.category = function () {

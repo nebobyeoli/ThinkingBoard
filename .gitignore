@@ -3,6 +3,7 @@ HELP.md
 application.properties
 MySQLtable.png
 *.svg
+unused.*
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/

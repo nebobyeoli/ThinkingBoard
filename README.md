@@ -1,6 +1,10 @@
 # ThinkingBoard
 
-`Ham teacher is love, ham teacher is life`
+`All css/js are self-written; no external dependencies.`
+
+`Java - Spring Boot`
+
+<i>`Ham teacher is love, ham teacher is life`</i>
 
 ### `notes`
 
@@ -29,6 +33,7 @@ new Promise((resolve, reject) => {
     return 'sth this ended';
 });
 ```
+> `end`
 </details>
 
 <details>
@@ -71,6 +76,7 @@ sth.doTransition = function () {
     setTimeout(() => console.log('transition has wooked | resolve(value)'), this.tdur);
 }
 ```
+> `end`
 </details>
 
 <details>
@@ -98,4 +104,5 @@ div {
     display: flex;
 }
 ```
+> `end`
 </details>

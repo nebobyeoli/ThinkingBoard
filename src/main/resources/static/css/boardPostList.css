@@ -1,36 +1,54 @@
 * {
-    transition: 450ms;
+    transition: 500ms, opacity 400ms, top, left, width 0ms;
 }
 
-div.delPost {
-    box-shadow: none;
+div.delPost { /* display, active */
+    display: flex;
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    top: -10000px; left: -10000px;
+    width: 0;
+    height: 0;
+
+    opacity: 0;
+    box-shadow: none;
 
     align-items: center; /* vertical */
     justify-content: center; /* horizontal */
-
-    /* transition via js setTimeout */
-    display: none; /* flex */
-    opacity: 0;
 }
 
-div.delPost div.backfill {
-    background-color: rgb(56, 39, 39);
+div.delPost[display] {
+    top: 0; left: 0;
+    width: 100%;
+}
+
+div.delPost[active] {
+    height: 100%;
+    opacity: 1;
+}
+
+div.delPost div.backfill { /* display */
+    top: -10000px; left: -10000px;
     opacity: .8;
+    background-color: rgb(56, 39, 39);
 }
 
-div.delPost div.delPost-form {
+div.delPost div.backfill[display] {
+    top: 0; left: 0;
+}
+
+div.delPost div.delPost-form { /* active */
     background-color: var(--white);
+    max-width: 16rem;
+    height: 0;
+
+    font-size: .8em;
     margin: 2rem;
     padding: 1.4em;
-    max-width: 16rem;
-    font-size: .8em;
     overflow: hidden;
+}
 
-    /* transition via js setTimeout */
-    height: max-content;
+div.delPost div.delPost-form[active] {
+    height: 10.5em;
 }
 
 div.delPost input[type=password] {

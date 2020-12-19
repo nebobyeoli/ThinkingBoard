@@ -1,9 +1,35 @@
-// 옵션 선택자(⋮)에 사용되는 배열
-let postopt_opened = []; // 0: 안 열림, 1: 열림
-for (let i = 0; i < document.querySelectorAll('div.paper.post').length; i++) postopt_opened.push(0)
+const transDur = getTransitionDur();
+
+const ppost = document.querySelectorAll('div.paper.post');
+const ppostCat = document.querySelectorAll('div.paper.post > span[name=post-category]');
+
+let postopt = {
+    expanded: [], // 옵션 선택자(⋮)에 사용되는 배열 -- 0: 안 열림, 1: 열림
+    panel: i => document.querySelector(`div.paper.post div.postopt-panel._${i}`),
+    panelAll: () => document.querySelectorAll('div.postopt-panel')
+};
+
+let deletePost = {
+    outer: document.querySelector('div.delPost'),
+    inpwd: document.querySelector('div.delPost input[name=password]'),
+    panel: document.querySelector('div.delPost div.delPost-form'),
+    fill: document.querySelector('div.delPost div.backfill')
+};
+
+document.body.addEventListener('click', e => {
+    if (e.target.tagName == 'svg') return; // if no-exclude: too many bugs.
+    if (e.target.classList.contains('postopt-panel') || e.target.parentElement.classList.contains('postopt-panel')) return;
+    postopt.closeAll();
+});
+
+/*** for Object : postopt ***/
+
+for (let i = 0; i < ppost.length; i++) {
+    postopt.expanded.push(0);
+}
 
 // 카테고리들을 화면에 나눠서 표시
-document.querySelectorAll('div.paper.post > span[name=post-category]').forEach(span => {
+ppostCat.forEach(span => {
     let categories = span.innerHTML.split('/');
 
     span.innerHTML = '';
@@ -12,185 +38,72 @@ document.querySelectorAll('div.paper.post > span[name=post-category]').forEach(s
     });
 });
 
-document.querySelectorAll('div.paper.post').forEach((post, i) => {
-    // 옵션 선택자(⋮) SVG
-    post.appendChild(createSVG({
-        class: `postopt-svg _${i}`,
-        viewBox: '0 0 20 20',
-        onclick: `openclose_postopt(${i})`
-    }, [
-        'M12,9.1v1.8c0,0.6-0.5,1.1-1.1,1.1H9.1C8.5,12,8,11.5,8,10.9V9.1C8,8.5,8.5,8,9.1,8h1.8C11.5,8,12,8.5,12,9.1z',
-        'M12,17v1.8c0,0.6-0.5,1.1-1.1,1.1H9.1c-0.6,0-1.1-0.5-1.1-1.1V17c0-0.6,0.5-1.1,1.1-1.1h1.8C11.5,15.9,12,16.4,12,17z',
-        'M12,1.2V3c0,0.6-0.5,1.1-1.1,1.1H9.1C8.5,4.1,8,3.6,8,3V1.2c0-0.6,0.5-1.1,1.1-1.1h1.8C11.5,0.1,12,0.6,12,1.2z'
-    ]));
-    post.classList.add(`_${i}`);
-
+ppost.forEach((post, i) => {
+    // SVG : 옵션 선택자(⋮)
     // postopt-panel : 글 수정 / 글 삭제 선택 패널
     post.innerHTML += `
+        <svg class="postopt-svg" viewBox="0 0 20 20" onclick="postopt.toggle(${i})">
+            <path d="M12,9.1v1.8c0,0.6-0.5,1.1-1.1,1.1H9.1C8.5,12,8,11.5,8,10.9V9.1C8,8.5,8.5,8,9.1,8h1.8C11.5,8,12,8.5,12,9.1z"></path>
+            <path d="M12,17v1.8c0,0.6-0.5,1.1-1.1,1.1H9.1c-0.6,0-1.1-0.5-1.1-1.1V17c0-0.6,0.5-1.1,1.1-1.1h1.8C11.5,15.9,12,16.4,12,17z"></path>
+            <path d="M12,1.2V3c0,0.6-0.5,1.1-1.1,1.1H9.1C8.5,4.1,8,3.6,8,3V1.2c0-0.6,0.5-1.1,1.1-1.1h1.8C11.5,0.1,12,0.6,12,1.2z"></path>
+        </svg>
         <div class="postopt-panel _${i}" style="display: none;">
             <p onclick="editPost(${i})">글 수정</p>
-            <p onclick="deletePost.panel(${i})">글 삭제</p>
+            <p onclick="deletePost.open(${i})">글 삭제</p>
         </div>
     `;
 });
 
-// // Previous
-//
-// function postopt-panel(i) {
-//     let pp = document.querySelector(`div.paper.post._${i}`);
-//     if (postopt_opened[i] == 0) {
-//         pp.innerHTML += `<div class="postopt-panel _${i}" onclick="postopt-panel()"><p>글 수정</p><p>글 삭제</p></div>`;
-//         postopt_opened[i] = 1;
-//     }
-// }
+postopt.closeAll = function () {
+    this.panelAll().forEach(panel => panel.style.display = 'none');
+    this.expanded.fill(0);
+}
 
-function openclose_postopt(i) {
-    let opened = postopt_opened[i];
-    closeAll_postopt();
+postopt.toggle = function (i) {
+    let opened = this.expanded[i];
+    this.closeAll();
 
     if (opened == 0) {
-        document.querySelector(`div.paper.post._${i} div.postopt-panel`).style.removeProperty('display');
-        postopt_opened[i] = 1;
+        this.panel(i).style.display = '';
+        this.expanded[i] = 1;
     }
     else {
-        document.querySelector(`div.paper.post._${i} div.postopt-panel`).style.setProperty('display', 'none');
-        postopt_opened[i] = 0;
+        this.panel(i).style.display = 'none';
+        this.expanded[i] = 0;
     }
 }
 
-function closeAll_postopt() {
-    document.querySelectorAll('div.postopt-panel').forEach(panl => panl.style.setProperty('display', 'none'));
-    postopt_opened.fill(0);
-}
-
-document.body.addEventListener('click', e => {
-    if (e.target.tagName == 'svg') return; // if no-exclude: 'many' bugs
-    if (e.target.classList.contains('postopt-panel') || e.target.parentElement.classList.contains('postopt-panel')) return;
-    closeAll_postopt();
-});
-
-// // Previous
-//
-// document.body.addEventListener('click', e => {
-//     let pp = isPaperPost(e.target);
-//     console.log(pp, e.target.parentElement)
-//     console.log(e.target.classList.contains('postopt'))
-//     console.log(e.target.tagName == 'svg')
-//
-//     if (pp && e.target.classList.contains('postopt') && e.target.tagName == 'svg') {
-//         console.log('classlist',e.target.classList.value.split('_')[1])
-//         if (postopt_opened[e.target.classList.value.split('_')[1]] == 0) {
-//             pp.innerHTML += '<div class="postopt-panel" onclick="postopt-panel()"><p>글 수정</p><p>글 삭제</p></div>';
-//         }
-//     }
-// });
+/*** for Object : editPost ***/
 
 function editPost(i) {
-    closeAll_postopt();
+    postopt.closeAll();
 }
 
-let deletePost = {};
+/*** for Object : deletePost ***/
 
-deletePost.transitionDur = getTransitionDur();
+deletePost.outer.addEventListener('keydown', e => {
+    if (e.keyCode == 27) deletePost.close(); // Esc key
+});
 
-deletePost.panel = function (i) {
-    closeAll_postopt();
+deletePost.open = function (i) {
+    postopt.closeAll();
 
-    let dp = document.querySelector('div.delPost');
-    let df = document.querySelector('div.delPost div.delPost-form');
+    this.outer.setAttribute('pk', i); // primary key -- id
+    this.inpwd.focus();
 
-    dp.setAttribute('pk', i);
+    this.outer.toggleAttribute('display');
+    this.fill.toggleAttribute('display');
 
-    new Promise(resolve => { // resolve, reject
-        dp.style.setProperty('display', 'flex');
-        let dp_h = getSize(dp).height;
-        let df_h = getSize(df).height; // value is 0 while display: none;
-
-        resolve([ dp_h, df_h ]);
-
-    }).then(orig_hs => {
-        dp.style.setProperty('height', '0');
-        df.style.setProperty('height', '0');
-
-        return orig_hs;
-
-    }).then(([dp_h, df_h]) => new Promise(resolve => {
-        setTimeout(() => {
-        // Reason for setTimeout: https://stackoverflow.com/a/3580703
-            dp.style.setProperty('opacity', '1')
-
-            dp.style.setProperty('height', dp_h);
-            df.style.setProperty('height', df_h); /* 'max-content' numeric alt. */
-        }, 100);
-    }));
+    this.outer.toggleAttribute('active');
+    this.panel.toggleAttribute('active');
 }
-
-// // Previous
-//
-// deletePost.panel = function (i) {
-//     closeAll_postopt();
-//
-//     let dp = document.querySelector('div.delPost');
-//     let df = document.querySelector('div.delPost div.delPost-form');
-//
-//     dp.setAttribute('pk', i);
-//     dp.style.setProperty('display', 'flex');
-//     dp.style.setProperty('height', '0');
-//
-//     let df_height = getSize(df).height; // value is 0 while display: none;
-//     df.style.setProperty('height', '0');
-//
-//     setTimeout(() => {
-//         dp.style.setProperty('opacity', '1');
-//         dp.style.setProperty('height', '100%');
-//         df.style.setProperty('height', df_height); /* 'max-content' numeric alt. */
-//     }, 100);
-// }
 
 deletePost.close = function () {
-    let dp = document.querySelector('div.delPost');
-    let df = document.querySelector('div.delPost div.delPost-form');
+    this.panel.toggleAttribute('active');
+    this.outer.toggleAttribute('active');
 
-    new Promise(resolve => { // resolve, reject
-        let dp_h = getSize(dp).height;
-        let df_h = getSize(df).height; // value is 0 while display: none;
-
-        resolve([ dp_h, df_h ]);
-
-    }).then(orig_hs => new Promise(resolve => {
-    // How to use setTimeout on Promise chain: https://stackoverflow.com/a/39538518
-
-        dp.style.setProperty('opacity', '0');
-        dp.style.setProperty('height', '0');
-        df.style.setProperty('height', '0');
-
-        setTimeout(() => resolve(orig_hs), this.transitionDur);
-
-    })).then(([dp_h, df_h]) => {
-        dp.style.setProperty('display', 'none');
-        dp.style.setProperty('height', dp_h);
-        df.style.setProperty('height', df_h);
-
-        return df_h;
-    });
+    setTimeout(() => {
+        this.fill.toggleAttribute('display');
+        this.outer.toggleAttribute('display');
+    }, transDur);
 }
-
-// // Previous
-//
-// deletePost.close = function () {
-//     let dp = document.querySelector('div.delPost');
-//     let df = document.querySelector('div.delPost div.delPost-form');
-//
-//     let df_height = getSize(df).height;
-//
-//     new Promise((res, rej) => setTimeout(() => {
-//         dp.style.setProperty('opacity', '0');
-//         dp.style.setProperty('height', '0');
-//         df.style.setProperty('height', '0');
-//
-//     }, 100)).then(() => {
-//         dp.style.setProperty('display', 'none');
-//         dp.style.setProperty('height', '100%');
-//         df.style.setProperty('height', df_height);
-//     });
-// }
