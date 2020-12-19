@@ -1,6 +1,6 @@
 body {
     font-size: 2rem;
-    padding: 2rem; /* top, side, bottom */
+    padding: 2rem; /* 0 2rem 2rem : top, side, bottom */
 }
 
 p {
@@ -23,5 +23,5 @@ div.formarea.password {
 }
 
 div.formarea.password span {
-    font-size: 0.8em;
+    font-size: .8em;
 }

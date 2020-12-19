@@ -8,12 +8,13 @@ body {
     font-weight: 200;
     font-size: 1.4rem;
 
-    --body-text: rgb(99, 0, 10);
+    --body-text: rgb(99, 0, 10); /* try searching "CSS variables" if you don't know ;) */
 
     color: var(--body-text);
 
     --radius: .6em;
     --paper: rgb(255, 232, 229);
+    --white: rgb(255, 242, 240);
 
     --title : rgb(143, 0, 62);
     --p     : rgb(177, 0, 24);
@@ -22,29 +23,41 @@ body {
     --pre-text         : rgb(131, 0, 76);
 }
 
-body > div#body-fill {
+.fullscreen {
     /* body background filling element */
+    all: initial;
     position: fixed;
     top: 0; left: 0;
     margin: 0;
     padding: 0;
 
     overflow: hidden;
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     z-index: -1;
 
+    border: 0;
+}
+
+body > div.fullscreen#body-fill {
     --color1 : 250, 220, 220;
     --color2 : 240, 160, 180;
     --cover  : 15%;
     --size   : 8%;
 
-    border: 0;
 	background:
 		linear-gradient(135deg, rgb(var(--color1)) var(--cover), transparent),
 		repeating-linear-gradient(45deg,  rgba(var(--color1), 1)  0%, rgba(var(--color2), .6) var(--size), transparent var(--size), transparent 10%),
         repeating-linear-gradient(-45deg, rgba(var(--color1), .4) 0%, rgba(var(--color2), .5) var(--size), transparent var(--size), transparent 10%),
 	    rgba(var(--color1), .4);
+}
+
+h1, h2 {
+    font-weight: 400;
+}
+
+h3 {
+    font-weight: 300;
+    color: var(--p);
 }
 
 .title {
@@ -53,7 +66,7 @@ body > div#body-fill {
 
 form table {
     font-size: .7em;
-    margin: 1.5em 0 0.5em 0;
+    margin: 1.5em 0 .5em 0;
     padding: 0;
 }
 
@@ -68,21 +81,21 @@ input, textarea, button {
     color: var(--pre-text);
     padding: 1rem;
     margin: 2rem 1rem 1rem 0;
+    transition: 140ms ease-out;
 }
 
 input:focus, textarea:focus, button:focus {
-    box-shadow: .2em .2em .3em rgba(208, 91, 132, 0.6);
-    transition: 200ms ease-in-out;
+    box-shadow: .2em .2em .3em rgba(208, 91, 132, .6);
 }
 
 input[type=checkbox] {
-    margin: 0 2.2em 0 0.8em; /* top, right, bottom, left */
+    margin: 0 2.2em 0 .8em; /* top, right, bottom, left */
     transform: scale(1.7);
 }
 
 input[type=password] {
-    margin: 0 0 1em 0.6em;
-    padding: 0.5em;
+    margin: 0 0 1em .6em;
+    padding: .5em;
 }
 
 textarea {
@@ -102,7 +115,16 @@ button {
 }
 
 button, .paper {
-    box-shadow: .1em .3em .5em rgb(215, 163, 163);
+    box-shadow: .1em .3em .5em rgb(215, 163, 163); /* right, bottom, range, color */
+}
+
+div, input {
+    box-shadow: .4em .5em .2em rgba(230, 170, 170, .4);
+}
+
+div, input {
+    border-radius: var(--radius);
+    padding: .4em;
 }
 
 .paper {
@@ -132,23 +154,59 @@ div.post {
     font-size: .8em;
 }
 
-h1, h2 {
-    font-weight: 400;
+div.formarea {
+    scroll-margin: 2rem;
 }
 
-h3 {
+div.postopt-panel {
+    position: absolute;
+    top: 0; right: -5.5em;
+    border-radius: 1em; /* from left, clockwise */
+    padding: 0 1em; /* height, width */
+    background-color: var(--white);
+}
+
+div.postopt-panel p {
     font-weight: 300;
+    cursor: pointer;
+}
+
+div.postopt-panel p:hover {
+    font-weight: 400;
     color: var(--p);
+}
+
+svg {
+    width: 1.2em;
+}
+
+svg.postopt-svg {
+    fill: indianred;
+    cursor: pointer;
+    position: absolute;
+    top: 0; right: 0;
+    width: 1.5em;
+    padding: .9em .6em;
+}
+
+p.invalid svg {
+    fill: red;
+    margin-right: .4em;
+}
+
+p.invalid {
+    font-size: .8em;
+    font-weight: 300;
+    color: red;
+    display: flex;
+    align-items: center;
+    margin: .5rem 0 2rem 0;
 }
 
 p {
     font-weight: 200;
     color: indianred;
     position: relative;
-}
-
-b {
-    font-weight: 400;
 }
 
 p.redir {
@@ -162,24 +220,10 @@ p.redir:hover {
     -ms-text-underline-position: under;
 }
 
-div.formarea {
-    scroll-margin: 2rem;
+b {
+    font-weight: 400;
 }
 
-p.invalid {
-    font-size: .8em;
-    font-weight: 300;
-    color: red;
-    display: flex;
-    align-items: center;
-    margin: .5rem 0 2rem 0;
-}
-
-p.invalid svg {
-    margin-right: .4em;
-    width: 1.2em;
-    fill: red;
-}
 
 pre b {
     font-family: "SeoulNamsan";
@@ -208,9 +252,9 @@ pre.block {
 
 pre.goto {
     color: var(--p);
-    background-color: rgba(255, 0, 34, 0.12);
+    background-color: rgba(255, 0, 34, .12);
     border-radius: 5em;
-    padding: 0.8em;
+    padding: .8em;
     font-size: 1em;
 }
 
@@ -220,8 +264,8 @@ p > pre.goto {
     bottom: 0;
 
     border-radius: .5em;
-    padding: 0.2em;
-    font-size: 0.5em;
+    padding: .2em;
+    font-size: .5em;
 }
 
 .no-select {

@@ -3,6 +3,7 @@
 
 <link rel="stylesheet" href="/css/fonts.css">
 <link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/boardPostList.css">
 <head>
     <meta charset="UTF-8">
     <title>생각판 | 게시판 보기</title>
@@ -14,6 +15,30 @@
     <h3 th:text="${post.getTitle()}" name="post-title"></h3>
     <span th:text="${post.getCategory()}" name="post-category"></span>
     <p th:text="${post.getContents()}" name="post-contents"></p>
+</div>
+
+<div class="delPost">
+
+    <div class="fullscreen backfill"></div>
+
+    <div class="delPost-form">
+
+        <form action="/posts/deleteOne">
+            <p>비밀번호를 입력하세요</p>
+            <input type="password" name="password" class="paper">
+            <p class="invalid">
+                <svg viewBox="0 0 20 20">
+                    <path d="M10,0C4.5,0,0,4.5,0,10s4.5,10,10,10s10-4.5,10-10S15.5,0,10,0z M10,18.5c-4.7,0-8.5-3.8-8.5-8.5S5.3,1.5,10,1.5 s8.5,3.8,8.5,8.5S14.7,18.5,10,18.5z"></path>
+                    <path d="M11.4,15c0,0.4-0.1,0.7-0.4,1c-0.3,0.3-0.6,0.5-1,0.5c-0.4,0-0.8-0.2-1-0.5c-0.3-0.3-0.4-0.6-0.4-1c0-0.4,0.1-0.7,0.4-1 c0.5-0.6,1.5-0.6,2,0C11.3,14.3,11.4,14.6,11.4,15z"></path><path d="M8.6,3.8h2.8l-0.7,8.5c0,0-1.5,0-1.5,0S8.6,3.8,8.6,3.8z"></path>
+                </svg>
+                삭제 후에는 다시 복구할 수 없습니다.
+            </p>
+            <button type="submit">삭제</button>
+            <button onclick="deletePost.close()" type="button" class="paper">취소</button>
+        </form>
+
+    </div>
+
 </div>
 
 <script src="/scripts/script.js"></script>

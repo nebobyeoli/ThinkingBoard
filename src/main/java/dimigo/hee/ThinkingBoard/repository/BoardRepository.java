@@ -10,4 +10,5 @@ public interface BoardRepository
     Boardpost findById(int id);
     Boardpost findByTitle(String title);
     ArrayList<Boardpost> findAll(); // 모든 Boardpost 반환
+    Boardpost deleteById(int id);
 }

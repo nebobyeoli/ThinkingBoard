@@ -24,11 +24,19 @@ public class BoardService
         return boardPost.getId();
     }
 
+    public Boardpost findById(int id) {
+        return boardRepository.findById(id);
+    }
+
+    public Boardpost findByTitle(String title) {
+        return boardRepository.findByTitle(title);
+    }
+
     public ArrayList<Boardpost> findAllPosts() {
         return boardRepository.findAll();
     }
 
-    public Boardpost findSinglePost(int id) {
-        return boardRepository.findById(id);
+    public Boardpost deleteById(int id) {
+        return boardRepository.deleteById(id);
     }
 }

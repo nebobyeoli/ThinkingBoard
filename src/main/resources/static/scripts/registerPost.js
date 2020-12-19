@@ -18,14 +18,9 @@ validate.invalPrint = function (areaname, alerttext) {
     if (validate.isValid) document.querySelector(`div.formarea.${areaname}`).scrollIntoView();
     if (document.querySelector(`div.formarea.${areaname} p.invalid`) != null) return;
 
-    let inval = document.createElement('p');
+    let inval = document.createElement('P');
     inval.setAttribute('class', 'invalid');
-
-    inval.appendChild(createSVG({ viewBox: '0 0 20 20' }, [
-        'M10,0C4.5,0,0,4.5,0,10s4.5,10,10,10s10-4.5,10-10S15.5,0,10,0z M10,18.5c-4.7,0-8.5-3.8-8.5-8.5S5.3,1.5,10,1.5 s8.5,3.8,8.5,8.5S14.7,18.5,10,18.5z',
-        'M11.4,15c0,0.4-0.1,0.7-0.4,1c-0.3,0.3-0.6,0.5-1,0.5c-0.4,0-0.8-0.2-1-0.5c-0.3-0.3-0.4-0.6-0.4-1c0-0.4,0.1-0.7,0.4-1 c0.5-0.6,1.5-0.6,2,0C11.3,14.3,11.4,14.6,11.4,15z',
-        'M8.6,3.8h2.8l-0.7,8.5c0,0-1.5,0-1.5,0S8.6,3.8,8.6,3.8z'
-    ]));
+    appendInvalSVG(inval);
     inval.innerHTML += alerttext;
 
     document.querySelector(`div.formarea.${areaname}`).appendChild(inval);

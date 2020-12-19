@@ -11,10 +11,12 @@
 <body>
 
 <form action="/posts/new" method="post" onsubmit="return validate.all()">
+
     <div class="formarea title">
         <p>게시글 제목</p>
         <input type="text" name="title" class="paper" maxlength="200"><br>
     </div>
+
     <div class="formarea category">
         <p>카테고리</p>
         <table class="catboxes">
@@ -42,15 +44,19 @@
             </tr>
         </table>
     </div>
+
     <div class="formarea contents">
         <p>게시글 내용</p>
         <textarea name="contents" cols="40" rows="15" class="paper" maxlength="1000"></textarea>
     </div>
+
     <div class="formarea password">
         <span>비밀번호</span><input type="password" name="password" class="paper"><br>
         <span>비밀번호 확인</span><input type="password" name="password_check" class="paper"><br>
     </div>
+
     <button type="submit">글 올리기</button>
+
 </form>
 
 <script src="/scripts/script.js"></script>

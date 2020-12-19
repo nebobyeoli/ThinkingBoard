@@ -32,6 +32,7 @@ public class BoardController
         bp.setTitle(postForm.getTitle());
         bp.setCategory(postForm.getCategory());
         bp.setContents(postForm.getContents());
+        bp.setPassword(postForm.getPassword());
 
         boardService.register(bp);
         return "redirect:/posts"; // 게시글 목록 뷰 파일로 이동
