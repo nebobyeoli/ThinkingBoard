@@ -3,6 +3,9 @@ const transDur = getTransitionDur();
 const ppost = document.querySelectorAll('div.paper.post');
 const ppostCat = document.querySelectorAll('div.paper.post > span[name=post-category]');
 
+let pkList = [];
+ppost.forEach(pp => pkList.push(pp.getAttribute('pk')));
+
 let postopt = {
     active: [], // 옵션 선택자(⋮)가 열렸는지 저장하는 배열
     panel: i => document.querySelector(`div.paper.post div.postopt-panel._${i}`),
@@ -11,11 +14,16 @@ let postopt = {
 
 let modifyPost = {
     active: false, // panel이 열려 있는 상태에서 Esc키 계속 누르고 있을 때 toggle이 계속 실행되는 것 방지
+
     outer: document.querySelector('div.modPost'),
+    panel: document.querySelector('div.modPost div.modPost-form'),
+    fill: document.querySelector('div.modPost div.backfill'),
+
     form: document.querySelector('div.modPost form'),
     inpwd: document.querySelector('div.modPost input[name=password]'),
-    panel: document.querySelector('div.modPost div.modPost-form'),
-    fill: document.querySelector('div.modPost div.backfill')
+
+    result: document.getElementById('modOnePostResult'),
+    showResult: document.getElementById('displayModPostResult')
 };
 
 document.body.addEventListener('click', e => {
@@ -50,8 +58,8 @@ ppost.forEach((post, i) => {
             <path d="M12,1.2V3c0,0.6-0.5,1.1-1.1,1.1H9.1C8.5,4.1,8,3.6,8,3V1.2c0-0.6,0.5-1.1,1.1-1.1h1.8C11.5,0.1,12,0.6,12,1.2z"></path>
         </svg>
         <div class="postopt-panel _${i}" style="display: none;">
-            <p onclick="modifyPost.edit(${i})">글 수정</p>
-            <p onclick="modifyPost.delete(${i})">글 삭제</p>
+            <p onclick="modifyPost.goEdit(${i})">글 수정</p>
+            <p onclick="modifyPost.goDelete(${i})">글 삭제</p>
         </div>
     `;
 });
@@ -81,7 +89,7 @@ modifyPost.outer.addEventListener('keydown', e => {
     if (e.keyCode == 27) modifyPost.close(); // Esc key
 });
 
-modifyPost.edit = function (i) {
+modifyPost.goEdit = function (i) {
     this.outer.setAttribute('modify', 'edit');
     this.form.action = '/posts/editOne';
     document.querySelector('div.modPost button[type=submit]').innerHTML = '수정';
@@ -89,13 +97,39 @@ modifyPost.edit = function (i) {
     this.open(i);
 }
 
-modifyPost.delete = function (i) {
+modifyPost.goDelete = function (i) {
     this.outer.setAttribute('modify', 'delete');
-    // this.outer.modify = 'delete';
+    // this.outer.modify = 'goDelete';
     this.form.action = '/posts/deleteOne';
     document.querySelector('div.modPost button[type=submit]').innerHTML = '삭제';
     document.querySelector('div.modPost p.invalid').style.display = '';
     this.open(i);
+}
+
+modifyPost.getResult = function () {
+    let modPk = this.result.getAttribute('modPk');
+    let modType = this.result.getAttribute('modType');
+    let modResult = this.result.getAttribute('modResult');
+    console.log('modPk:', modPk);
+    console.log('modType:', modType);
+    console.log('modResult:', modResult);
+
+    if (modType == null) return;
+
+    if (modResult == 'true') {
+        this.showResult.style.display = '';
+        this.showResult.innerHTML += `글 ${modType=='edit' ? '수정이' : '삭제가'} 완료되었습니다.`;
+    }
+    else {
+        this.showResult.innerHTML += `비밀번호가 잘못되었습니다.`;
+        if (modType == 'edit') this.goEdit(pkList.indexOf(modPk));
+        else this.goDelete(pkList.indexOf(modPk));
+        document.querySelector('div.modPost div.invCase').innerHTML += `
+            <p class="invalid wrongPwd">
+                ${this.showResult.innerHTML}
+            </p>
+        `;
+    }
 }
 
 modifyPost.open = function (i) {
@@ -103,7 +137,7 @@ modifyPost.open = function (i) {
 
     postopt.closeAll();
 
-    this.outer.setAttribute('pk', i); // primary key -- id
+    document.getElementById('pk').value = pkList[i]; // primary key -- id
     this.inpwd.focus();
 
     this.outer.toggleAttribute('display');
@@ -124,7 +158,10 @@ modifyPost.close = function () {
     setTimeout(() => {
         this.fill.toggleAttribute('display');
         this.outer.toggleAttribute('display');
-    }, transDur);
 
-    this.active = false;
+        let hasWrong = document.querySelector('div.modPost p.invalid.wrongPwd');
+        if (hasWrong) hasWrong.remove();
+
+        this.active = false;
+    }, transDur);
 }

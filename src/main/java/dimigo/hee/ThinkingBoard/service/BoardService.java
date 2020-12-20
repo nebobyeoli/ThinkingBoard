@@ -28,6 +28,13 @@ public class BoardService
         return boardRepository.findById(id);
     }
 
+    public Boardpost matchPassword(int id, String password) {
+        Boardpost post = boardRepository.findById(id);
+        if (post.getPassword() == null) return post; // 비밀번호가 설정되지 않은 글은 어떤 비밀번호를 넣어도 비밀번호가 일치한다고 간주함
+        if (post.getPassword().equals(password)) return post; // 비밀번호가 일치하는 경우
+        return null; // 비밀번호가 아닌 경우
+    }
+
     public Boardpost findByTitle(String title) {
         return boardRepository.findByTitle(title);
     }

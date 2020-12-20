@@ -189,18 +189,25 @@ svg.postopt-svg {
     padding: .9em .6em;
 }
 
-p.invalid svg {
+.invalid svg {
     fill: red;
     margin-right: .4em;
+}
+
+.invalid {
+    color: red;
+    display: flex;
+    align-items: center;
+    margin: .5rem 0 2rem 0;
+}
+
+#displayModPostResult.invalid {
+    margin: 1.6em 1em 1em 1em;
 }
 
 p.invalid {
     font-size: .8em;
     font-weight: 300;
-    color: red;
-    display: flex;
-    align-items: center;
-    margin: .5rem 0 2rem 0;
 }
 
 p {

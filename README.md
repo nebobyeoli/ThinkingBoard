@@ -8,6 +8,8 @@
 
 ### `notes`
 
+### <ins> [How to pass model attributes between Spring MVC controllers](https://stackoverflow.com/a/17346284) </ins>
+
 <details>
 <summary>
 
@@ -101,7 +103,7 @@ div {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    display: flex;
+    showResult: flex;
 }
 ```
 > `end`

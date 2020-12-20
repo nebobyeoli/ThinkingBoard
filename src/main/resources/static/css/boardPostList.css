@@ -2,7 +2,7 @@
     transition: 500ms, opacity 400ms, top, left, width 0ms;
 }
 
-div.modPost { /* display, active */
+div.modPost { /* showResult, active */
     display: flex;
     position: fixed;
     top: -10000px; left: -10000px;
@@ -26,10 +26,10 @@ div.modPost[active] {
     opacity: 1;
 }
 
-div.modPost div.backfill { /* display */
+div.modPost div.backfill { /* showResult */
     top: -10000px; left: -10000px;
     opacity: .8;
-    background-color: rgb(40, 20, 20);
+    background-color: rgb(30, 20, 20);
 }
 
 div.modPost div.backfill[display] {
@@ -56,6 +56,10 @@ div.modPost[modify=delete] div.modPost-form[active] {
     height: 12.4em;
 }
 
+[modify=edit] div.modPost-form p {
+    margin-top: .8em;
+}
+
 div.modPost-form p {
     width: max-content;
     font-weight: 400;
@@ -74,7 +78,7 @@ div.modPost-form p.invalid {
     color: red;
     display: flex;
     align-items: center;
-    margin: .6rem 0 .6rem 0;
+    margin: .6em 0 1em 0;
 }
 
 div.modPost div.invCase {
@@ -100,6 +104,7 @@ div.modPost input[type=password] {
 
 div.modPost button {
     font-size: 1em;
+    font-weight: 400;
     width: 5em; height: 2.7em;
 
     margin: 0 .8em 0 0;
