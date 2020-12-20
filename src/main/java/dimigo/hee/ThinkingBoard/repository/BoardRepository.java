@@ -1,36 +1,24 @@
 package dimigo.hee.ThinkingBoard.repository;
 
 import dimigo.hee.ThinkingBoard.domain.Boardpost;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+//import org.springframework.data.jpa.repository.Modifying;
+//import org.springframework.data.jpa.repository.Query;
+//import org.springframework.data.repository.query.Param;
 
 import java.util.ArrayList;
 
 public interface BoardRepository
 {
+    // 기본 SpringDataJPA 제공 함수들
+
     Boardpost save(Boardpost boardPost);
 
     Boardpost findById(int id);
 
-//    Boardpost findByTitle(@Param("title") String title);
-//
-//    Boardpost findByCategory(@Param("category") String category);
-//
-//    Boardpost findByContents(@Param("contents") String contents);
+    ArrayList<Boardpost> findAll();
+    // 모든 Boardpost 반환
+    // boardService의 기본 외 함수들은
+    // findAll, findById에서 반환된 ArrayList<Boardpost> 데이터를 이용하여 실행됨
 
-//    @Modifying
-//    @Query(value = "SELECT * FROM Boardpost WHERE post.title LIKE LOWER(CONCAT('%',:title,'%'))", nativeQuery = true)
-//    Boardpost findByTitle(@Param("title") String title);
-//
-//    @Modifying
-//    @Query(value = "SELECT * FROM Boardpost WHERE post.category LIKE LOWER(CONCAT('%',:category,'%'))", nativeQuery = true)
-//    Boardpost findByCategory(@Param("category") String category);
-//
-//    @Modifying
-//    @Query(value = "SELECT * FROM Boardpost WHERE post.contents LIKE LOWER(CONCAT('%',:contents,'%'))", nativeQuery = true)
-//    Boardpost findByContents(@Param("contents") String contents);
-
-    ArrayList<Boardpost> findAll(); // 모든 Boardpost 반환
     Boardpost deleteById(int id);
 }

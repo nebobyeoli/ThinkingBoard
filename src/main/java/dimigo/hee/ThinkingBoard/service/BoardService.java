@@ -60,11 +60,9 @@ public class BoardService
         ArrayList<Boardpost> list = new ArrayList<>();
 
         for (Boardpost post : this.findAll()) {
-            for (String id : idsArr)
-                if (Integer.toString(post.getId()).contains(id)) {
-                    list.add(post);
-                    break;
-                }
+            int contains = 0;
+            for (String id : idsArr) if (Integer.toString(post.getId()).contains(id)) contains++;
+            if (contains == idsArr.length) list.add(post);
         }
         return list;
     }
@@ -76,11 +74,9 @@ public class BoardService
         ArrayList<Boardpost> list = new ArrayList<>();
 
         for (Boardpost post : this.findAll()) {
-            for (String word : titleArr)
-                if (post.getTitle().contains(word)) {
-                    list.add(post);
-                    break;
-                }
+            int contains = 0;
+            for (String word : titleArr) if (post.getTitle().contains(word)) contains++;
+            if (contains == titleArr.length) list.add(post);
         }
         return list;
     }
@@ -92,11 +88,9 @@ public class BoardService
         ArrayList<Boardpost> list = new ArrayList<>();
 
         for (Boardpost post : this.findAll()) {
-            for (String cat : catArr)
-                if (post.getCategory().contains(cat)) {
-                    list.add(post);
-                    break;
-                }
+            int contains = 0;
+            for (String cat : catArr) if (post.getCategory().contains(cat)) contains++;
+            if (contains == catArr.length) list.add(post);
         }
         return list;
     }
@@ -108,11 +102,9 @@ public class BoardService
         ArrayList<Boardpost> list = new ArrayList<>();
 
         for (Boardpost post : this.findAll()) {
-            for (String word : contsArr)
-                if (post.getContents().contains(word)) {
-                    list.add(post);
-                    break;
-                }
+            int contains = 0;
+            for (String word : contsArr) if (post.getContents().contains(word)) contains++;
+            if (contains == contsArr.length) list.add(post);
         }
         return list;
     }
