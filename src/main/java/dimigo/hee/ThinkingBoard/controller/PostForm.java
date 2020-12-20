@@ -1,6 +1,7 @@
 package dimigo.hee.ThinkingBoard.controller;
 
-// 게시글 형식
+// 게시글 형식 - 폼 입력받는 틀용
+// PostForm과 Boardpost의 구체적 차이는 BoardService.java의 register 부분에 작성되어 있
 public class PostForm
 {
     private String title; // 게시글 제목
@@ -21,13 +22,15 @@ public class PostForm
     }
 
     public void setCategory(String[] category) {
-        this.category = String.join("/", category); // String array > 첫 번째 방법
+        this.category = String.join("/", category); // String[] type >> String : 첫 번째 방법
 
         // 두 번째 방법: BoardController.java > register 함수에서
         // bp.setCategory(String.join("/", postForm.getCategory())); 설정
 
         // 세 번째 방법: BoardService.java > register 에서
         // boardPost.setCategory(String.join("/", postForm.getCategory())); 설정
+
+        // -- 0번째 방법: 그냥 입력받을 때부터 배열 말고 그냥 String으로 받는다 --
     }
 
     public String getContents() {
