@@ -3,7 +3,7 @@ const transDur = getTransitionDur();
 const ppost = document.querySelectorAll('div.paper.post');
 const ppostCat = document.querySelectorAll('div.paper.post > span[name=post-category]');
 
-let pkList = [];
+let pkList = []; // pk = primary key -- 등록 순서대로, 각 게시글의 pk값 저장하는 배열
 ppost.forEach(pp => pkList.push(pp.getAttribute('pk')));
 
 let postopt = {
@@ -22,8 +22,8 @@ let modifyPost = {
     form: document.querySelector('div.modPost form'),
     inpwd: document.querySelector('div.modPost input[name=password]'),
 
-    result: document.getElementById('modOnePostResult'),
-    showResult: document.getElementById('displayModPostResult')
+    result: document.getElementById('modPostInfo'),
+    showResult: document.getElementById('displayModPostInfo')
 };
 
 document.body.addEventListener('click', e => {
@@ -91,7 +91,7 @@ modifyPost.outer.addEventListener('keydown', e => {
 
 modifyPost.goEdit = function (i) {
     this.outer.setAttribute('modify', 'edit');
-    this.form.action = '/posts/editOne';
+    this.form.action = '/posts/editPost';
     document.querySelector('div.modPost button[type=submit]').innerHTML = '수정';
     document.querySelector('div.modPost p.invalid').style.display = 'none';
     this.open(i);
@@ -107,28 +107,41 @@ modifyPost.goDelete = function (i) {
 }
 
 modifyPost.getResult = function () {
-    let modPk = this.result.getAttribute('modPk');
-    let modType = this.result.getAttribute('modType');
+    let modPk     = this.result.getAttribute('modPk');
+    let modType   = this.result.getAttribute('modType');
     let modResult = this.result.getAttribute('modResult');
-    console.log('modPk:', modPk);
-    console.log('modType:', modType);
-    console.log('modResult:', modResult);
 
     if (modType == null) return;
 
-    if (modResult == 'true') {
-        this.showResult.style.display = '';
-        this.showResult.innerHTML += `글 ${modType=='edit' ? '수정이' : '삭제가'} 완료되었습니다.`;
-    }
-    else {
+    this.showResult.style.display = '';
+
+    if (modResult == 'fail') {
+        this.showResult.classList.remove('valid');
+        this.showResult.classList.add('invalid');
         this.showResult.innerHTML += `비밀번호가 잘못되었습니다.`;
+
         if (modType == 'edit') this.goEdit(pkList.indexOf(modPk));
         else this.goDelete(pkList.indexOf(modPk));
+
         document.querySelector('div.modPost div.invCase').innerHTML += `
-            <p class="invalid wrongPwd">
-                ${this.showResult.innerHTML}
-            </p>
+            <p class="invalid wrongPwd">${this.showResult.innerHTML}</p>
         `;
+
+        console.log(`#${modPk}번째 생각 ${modType == 'edit' ? '수정' : '삭제'} 실패`);
+    }
+
+    else {
+        this.showResult.style.display = '';
+
+        if (modResult == 'done') {
+            this.showResult.innerHTML += `글 ${modType == 'edit' ? '수정이' : '삭제가'} 완료되었습니다.`;
+            console.log(`[#${modPk}번째 생각] ${modType == 'edit' ? '수정' : '삭제'} 성공`);
+        }
+
+        else { // modResult == 'noChange'
+            this.showResult.innerHTML += `변경된 내용이 없습니다.`;
+            console.log(`[#${modPk}번째 생각] 변경된 내용 없음`);
+        }
     }
 }
 
@@ -159,6 +172,7 @@ modifyPost.close = function () {
         this.fill.toggleAttribute('display');
         this.outer.toggleAttribute('display');
 
+        this.inpwd.value = '';
         let hasWrong = document.querySelector('div.modPost p.invalid.wrongPwd');
         if (hasWrong) hasWrong.remove();
 

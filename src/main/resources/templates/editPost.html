@@ -1,27 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" th:inline="text">
 
 <head>
     <meta charset="UTF-8">
-    <title>생각판 | 새 게시글 작성</title>
+    <title>생각판 | 게시글 수정</title>
     <link rel="stylesheet" href="/css/fonts.css">
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/registerPost.css">
 </head>
 <body>
 
-<form action="/posts/new" method="post" onsubmit="return validate.all()">
+<!--/*@thymesVar id="post" type="dimigo.hee.ThinkingBoard.domain.Boardpost"*/-->
+<form action="/posts/editPost/submit" method="post" onsubmit="return validate.all()">
+
+    <input name="id" th:value="${post.getId()}" type="hidden">
 
     <div class="formarea title">
         <p>게시글 제목</p>
-        <input type="text" name="title" class="paper" maxlength="200"><br>
+        <input type="text" name="title" th:value="${post.getTitle()}" class="paper" maxlength="200"><br>
     </div>
 
     <div class="formarea category">
         <p>카테고리</p>
+        <p id="getCategory" type="hidden" th:value="${post.getCategory()}"></p>
         <table class="catboxes">
             <tr>
-                <td class="catbox checked">의식의 흐름</td>
+                <td class="catbox">의식의 흐름</td>
                 <td class="catbox">유머</td>
                 <td class="catbox">생활 야담</td>
                 <td class="catbox">인생은...</td>
@@ -47,15 +51,17 @@
 
     <div class="formarea contents">
         <p>게시글 내용</p>
-        <textarea name="contents" cols="40" rows="15" class="paper" maxlength="1000"></textarea>
+        <textarea name="contents" th:text="${post.getContents()}" cols="40" rows="15" class="paper" maxlength="1000"></textarea>
     </div>
 
     <div class="formarea password">
-        <span>비밀번호</span><input type="password" name="password" class="paper"><br>
-        <span>비밀번호 확인</span><input type="password" name="password_check" class="paper"><br>
+        <p style="margin-bottom: 1.6em">새 비밀번호 (선택)</p>
+        <span>비밀번호</span><input type="password" name="password" th:value="${post.getPassword()}" class="paper"><br>
+        <span>비밀번호 확인</span><input type="password" name="password_check" th:value="${post.getPassword()}" class="paper"><br>
     </div>
 
-    <button type="submit">글 올리기</button>
+    <button type="submit">글 수정하기</button>
+    <button type="button" class="paper">취소</button>
 
 </form>
 

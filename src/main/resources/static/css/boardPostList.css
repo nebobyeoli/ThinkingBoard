@@ -1,5 +1,5 @@
 * {
-    transition: 500ms, opacity 400ms, top, left, width 0ms;
+    transition: 440ms, opacity 360ms, top, left, width 0ms;
 }
 
 div.modPost { /* showResult, active */
@@ -67,19 +67,22 @@ div.modPost-form p {
     margin: 0;
 }
 
-div.modPost-form p.invalid svg {
-    fill: red;
+div.modPost-form .invalid svg,
+div.modPost-form .valid svg {
     margin-right: .4em;
 }
 
-div.modPost-form p.invalid {
+div.modPost-form p.invalid,
+div.modPost-form p.valid {
     font-size: .8em;
     font-weight: 300;
-    color: red;
     display: flex;
     align-items: center;
     margin: .6em 0 1em 0;
 }
+
+div.modPost-form p.invalid { color: var(--invalid); }
+div.modPost-form p.valid   { color: var(--valid); }
 
 div.modPost div.invCase {
     margin: 0;

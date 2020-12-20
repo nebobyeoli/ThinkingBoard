@@ -6,7 +6,13 @@
 
 <i>`Ham teacher is love, ham teacher is life`</i>
 
-### `notes`
+### On clone use:
+
+Rename `application.properties_editOnUse` to `application.properties`
+
+Change `datasource` password
+
+### Notes to self
 
 ### <ins> [How to pass model attributes between Spring MVC controllers](https://stackoverflow.com/a/17346284) </ins>
 

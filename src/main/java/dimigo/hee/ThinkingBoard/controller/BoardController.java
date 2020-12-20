@@ -1,6 +1,7 @@
 package dimigo.hee.ThinkingBoard.controller;
 
 import dimigo.hee.ThinkingBoard.domain.Boardpost;
+import dimigo.hee.ThinkingBoard.domain.ModPostInfo;
 import dimigo.hee.ThinkingBoard.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,24 +30,17 @@ public class BoardController
 
     @PostMapping("/posts/new")
     public String registerPost(PostForm post) {
-        Boardpost bp = new Boardpost(); // 새 게시글
-
-        bp.setTitle(post.getTitle());
-        bp.setCategory(post.getCategory());
-        bp.setContents(post.getContents());
-        bp.setPassword(post.getPassword());
-
-        boardService.register(bp);
+        boardService.register(post);
         return "redirect:/posts"; // 게시글 목록 뷰 파일로 이동
     }
 
     @GetMapping("/posts")
     public String postList(
-            @ModelAttribute("modOnePostResult") ModOnePostResult modOnePostResult,
+            @ModelAttribute("mpInfo") ModPostInfo mpInfo,
             Model model
     ) {
 
-        model.addAttribute("mod1pResult", modOnePostResult);
+        model.addAttribute("mpInfo", mpInfo);
 
         ArrayList<Boardpost> posts = boardService.findAllPosts();
         model.addAttribute("postList", posts);
@@ -55,73 +49,72 @@ public class BoardController
     }
 
     // Pass model attributes between Spring MVC controllers https://stackoverflow.com/a/17346284
-    @PostMapping("/posts/deleteOne")
-    public String deleteOnePost(
-            OnePost post,
+    @PostMapping("/posts/editPost")
+    public String editOnePost(
+            int id,
+            String password,
+            Model model,
             RedirectAttributes redirAttributes
     ) {
 
-        ModOnePostResult modOnePostResult = new ModOnePostResult();
-        modOnePostResult.setId(post.getId());
-        modOnePostResult.setModType("delete");
+        ModPostInfo mpInfo = new ModPostInfo();
+        mpInfo.setId(id);
+        mpInfo.setModType("edit");
 
-        Boardpost match = boardService.matchPassword(post.getId(), post.getPassword());
-        if (match == null) modOnePostResult.setResult(false);
-        else modOnePostResult.setResult(true);
+        Boardpost matchPost = boardService.getMatchingPost(id, password);
+        String redirect;
 
-        redirAttributes.addFlashAttribute("modOnePostResult", modOnePostResult);
+        if (matchPost == null) {
+            mpInfo.setResult("fail");
+            redirAttributes.addFlashAttribute("mpInfo", mpInfo);
+            redirect = "redirect:/posts";
+        }
+        else {
+            mpInfo.setResult("done");
+            model.addAttribute("post", matchPost);
+            redirect = "editPost";
+        }
+
+        return redirect;
+    }
+
+    @PostMapping("/posts/editPost/submit")
+    public String editPostSubmit(
+            int id,
+            PostForm post,
+            RedirectAttributes redirAttributes
+    ) {
+
+        ModPostInfo mpInfo = boardService.editPost(id, post);
+
+        redirAttributes.addFlashAttribute("mpInfo", mpInfo);
 
         return "redirect:/posts";
     }
-}
 
-class OnePost {
-    private int id;
-    private String password;
+    @PostMapping("/posts/deleteOne")
+    public String deleteOnePost(
+            int id,
+            String password,
+            RedirectAttributes redirAttributes
+    ) {
 
-    public int getId() {
-        return id;
-    }
+        ModPostInfo mpInfo = new ModPostInfo();
+        mpInfo.setId(id);
+        mpInfo.setModType("delete");
 
-    public void setId(String id) {
-        this.id = Integer.parseInt(id);
-    }
+        Boardpost matchPost = boardService.getMatchingPost(id, password);
 
-    public String getPassword() {
-        return password;
-    }
+        if (matchPost == null) {
+            mpInfo.setResult("fail");
+        }
+        else {
+            mpInfo.setResult("done");
+            boardService.delete(matchPost);
+        }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-}
+        redirAttributes.addFlashAttribute("mpInfo", mpInfo);
 
-class ModOnePostResult {
-    private int id;
-    private String modType;
-    private boolean result;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getModType() {
-        return modType;
-    }
-
-    public void setModType(String modType) {
-        this.modType = modType;
-    }
-
-    public boolean getResult() {
-        return result;
-    }
-
-    public void setResult(boolean result) {
-        this.result = result;
+        return "redirect:/posts";
     }
 }

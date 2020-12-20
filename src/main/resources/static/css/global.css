@@ -11,10 +11,14 @@ body {
     --body-text: rgb(99, 0, 10); /* try searching "CSS variables" if you don't know ;) */
 
     color: var(--body-text);
+    --pline-height: 1.4em;
 
     --radius: .6em;
     --paper: rgb(255, 232, 229);
     --white: rgb(255, 242, 240);
+
+    --invalid: red;
+    --valid: slateblue;
 
     --title : rgb(143, 0, 62);
     --p     : rgb(177, 0, 24);
@@ -88,18 +92,9 @@ input:focus, textarea:focus, button:focus {
     box-shadow: .2em .2em .3em rgba(208, 91, 132, .6);
 }
 
-input[type=checkbox] {
-    margin: 0 2.2em 0 .8em; /* top, right, bottom, left */
-    transform: scale(1.7);
-}
-
-input[type=password] {
-    margin: 0 0 1em .6em;
-    padding: .5em;
-}
-
 textarea {
     color: indianred;
+    line-height: var(--pline-height);
 }
 
 button, input[type=submit][type=button] {
@@ -111,7 +106,7 @@ button {
     color: var(--pre-text);
     border-radius: var(--radius);
     padding: 2rem;
-    margin: 0;
+    margin: 0 .5rem 0 1rem;
 }
 
 button, .paper {
@@ -119,12 +114,23 @@ button, .paper {
 }
 
 div, input {
+    padding: .4em;
+    border-radius: var(--radius);
     box-shadow: .4em .5em .2em rgba(230, 170, 170, .4);
 }
 
-div, input {
-    border-radius: var(--radius);
-    padding: .4em;
+input[type=text] {
+    padding: 1em;
+}
+
+input[type=checkbox] {
+    margin: 0 2.2em 0 .8em; /* top, right, bottom, left */
+    transform: scale(1.7);
+}
+
+input[type=password] {
+    margin: 0 0 1em .6em;
+    padding: .5em;
 }
 
 .paper {
@@ -138,6 +144,7 @@ div.post > h2 {
 }
 div.post > p {
     margin-bottom: 0;
+    line-height: var(--pline-height);
 }
 div.post > h3 {
     margin-top: .8em;
@@ -189,25 +196,33 @@ svg.postopt-svg {
     padding: .9em .6em;
 }
 
-.invalid svg {
-    fill: red;
-    margin-right: .4em;
-}
-
-.invalid {
-    color: red;
+.invalid, .valid {
     display: flex;
     align-items: center;
     margin: .5rem 0 2rem 0;
 }
 
-#displayModPostResult.invalid {
-    margin: 1.6em 1em 1em 1em;
-}
-
-p.invalid {
+p.invalid, p.valid {
     font-size: .8em;
     font-weight: 300;
+}
+
+.invalid {
+    color: var(--invalid);
+    fill: var(--invalid);
+}
+
+.valid {
+    color: var(--valid);
+    fill: var(--valid);
+}
+
+.invalid svg, .valid svg { margin-right: .6em; }
+.valid svg               { transform: rotate(180deg); }
+
+#displayModPostInfo.invalid,
+#displayModPostInfo.valid {
+    margin: 1.6em 1em 1em 1em;
 }
 
 p {
