@@ -23,12 +23,12 @@ public class BoardController
         this.boardService = boardService;
     }
 
-    @GetMapping("/posts/new")
+    @GetMapping("/posts/new") // GET 으로의 "/post/new"는 등록 폼으로 이동
     public String register() {
         return "registerPost"; // 게시글 입력 뷰 파일로 이동
     }
 
-    @PostMapping("/posts/new")
+    @PostMapping("/posts/new") // POST 로의 "/posts/new"는 SUBMIT 저장 진행
     public String registerPost(PostForm post) {
         boardService.register(post);
         return "redirect:/posts"; // 게시글 목록 뷰 파일로 이동

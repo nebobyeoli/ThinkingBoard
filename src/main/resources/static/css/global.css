@@ -155,21 +155,18 @@ div.container {
 
 div.post {
     position: relative;
-    height: max-content;
 
+    width: 18rem;
+    height: max-content;
+    max-height: 30rem;
+
+    font-size: .8em;
     margin: 0;
     padding: 1.4em;
 
-    width: 18rem;
-    max-height: 30rem;
-
+    overflow-x: visible;
+    overflow-y: scroll;
     box-shadow: none;
-    box-sizing: border-box;
-    font-size: .8em;
-}
-
-div.post div.postopt-panel {
-    box-sizing: initial;
 }
 
 div.postWrapper {
@@ -177,15 +174,8 @@ div.postWrapper {
     margin: 2rem;
     padding: 0;
 
-    width: 19rem;
+    width: 20.6rem;
     height: max-content;
-
-    /*overflow: hidden;*/
-    overflow-x: auto;
-    overflow-y: scroll;
-}
-
-div.postWrapper:hover {
 }
 
 div.post > h2 {

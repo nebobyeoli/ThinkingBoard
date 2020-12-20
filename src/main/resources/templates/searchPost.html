@@ -70,8 +70,8 @@
     </h3>
 
     <!--/*@thymesVar id="post" type="dimigo.hee.ThinkingBoard.domain.Boardpost"*/-->
-    <div th:each="post : ${searchList}" class="paper postWrapper">
-        <div class="paper post" th:pk="${post.getId()}">
+    <div th:each="post : ${searchList}" class="paper postWrapper" th:pk="${post.getId()}">
+        <div class="paper post">
             <h2 th:text="'#' + ${post.getId()} + '번째 생각'" name="post-id"></h2>
             <h3 th:text="${post.getTitle()}" name="post-title"></h3>
             <span th:text="${post.getCategory()}" name="post-category"></span>

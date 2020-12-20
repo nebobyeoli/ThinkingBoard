@@ -27,16 +27,9 @@ let modifyPost = {
 };
 
 document.body.addEventListener('click', e => {
-    if ((e.target.tagName == 'path' || e.target.tagName == 'PATH')) e.target = e.target.parentElement;
-
-    if ((e.target.tagName == 'svg' || e.target.tagName == 'SVG') && e.target.classList.contains('postopt-svg')) {
-        let i = e.target.getAttribute('oncl').split('(')[1].slice(0, 1);
-        postopt.toggle(i);
-        console.log(i)
-    }
-
-    else if (e.target.classList.contains('postopt-panel') || e.target.parentElement.classList.contains('postopt-panel')) return;
-    else postopt.closeAll();
+    if (e.target.tagName == 'svg') return;
+    if (e.target.classList.contains('postopt-panel') || e.target.parentElement.classList.contains('postopt-panel')) return;
+    postopt.closeAll();
 });
 
 /*** for Object : postopt ***/
@@ -59,7 +52,7 @@ ppost.forEach((post, i) => {
     // SVG : 옵션 선택자(⋮)
     // postopt-panel : 글 수정 / 글 삭제 선택 패널
     post.innerHTML += `
-        <svg class="postopt-svg" viewBox="0 0 20 20" oncl="postopt.toggle(${i})">
+        <svg class="postopt-svg" viewBox="0 0 20 20" onclick="postopt.toggle(${i})">
             <path d="M12,9.1v1.8c0,0.6-0.5,1.1-1.1,1.1H9.1C8.5,12,8,11.5,8,10.9V9.1C8,8.5,8.5,8,9.1,8h1.8C11.5,8,12,8.5,12,9.1z"></path>
             <path d="M12,17v1.8c0,0.6-0.5,1.1-1.1,1.1H9.1c-0.6,0-1.1-0.5-1.1-1.1V17c0-0.6,0.5-1.1,1.1-1.1h1.8C11.5,15.9,12,16.4,12,17z"></path>
             <path d="M12,1.2V3c0,0.6-0.5,1.1-1.1,1.1H9.1C8.5,4.1,8,3.6,8,3V1.2c0-0.6,0.5-1.1,1.1-1.1h1.8C11.5,0.1,12,0.6,12,1.2z"></path>
@@ -79,8 +72,6 @@ postopt.closeAll = function () {
 postopt.toggle = function (i) {
     let opened = this.active[i];
     this.closeAll();
-
-    console.log('opened', opened)
 
     if (!opened) {
         this.panel(i).style.display = '';
