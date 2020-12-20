@@ -104,17 +104,17 @@ public class BoardController
     // Pass model attributes between Spring MVC controllers https://stackoverflow.com/a/17346284
     @PostMapping("/posts/editPost")
     public String editOnePost(
-            int id,
+            String id,
             String password,
             Model model,
             RedirectAttributes redirAttributes
     ) {
 
         ModPostInfo mpInfo = new ModPostInfo();
-        mpInfo.setId(id);
+        mpInfo.setId(Integer.parseInt(id));
         mpInfo.setModType("edit");
 
-        Boardpost matchPost = boardService.getMatchingPost(id, password);
+        Boardpost matchPost = boardService.getMatchingPost(Integer.parseInt(id), password);
         String redirect;
 
         if (matchPost == null) {
@@ -133,12 +133,12 @@ public class BoardController
 
     @PostMapping("/posts/editPost/submit")
     public String editPostSubmit(
-            int id,
+            String id,
             PostForm post,
             RedirectAttributes redirAttributes
     ) {
 
-        ModPostInfo mpInfo = boardService.editPost(id, post);
+        ModPostInfo mpInfo = boardService.editPost(Integer.parseInt(id), post);
 
         redirAttributes.addFlashAttribute("mpInfo", mpInfo);
 
@@ -147,16 +147,16 @@ public class BoardController
 
     @PostMapping("/posts/deleteOne")
     public String deleteOnePost(
-            int id,
+            String id,
             String password,
             RedirectAttributes redirAttributes
     ) {
 
         ModPostInfo mpInfo = new ModPostInfo();
-        mpInfo.setId(id);
+        mpInfo.setId(Integer.parseInt(id));
         mpInfo.setModType("delete");
 
-        Boardpost matchPost = boardService.getMatchingPost(id, password);
+        Boardpost matchPost = boardService.getMatchingPost(Integer.parseInt(id), password);
 
         if (matchPost == null) {
             mpInfo.setResult("fail");

@@ -168,18 +168,24 @@ div.post {
     font-size: .8em;
 }
 
+div.post div.postopt-panel {
+    box-sizing: initial;
+}
+
 div.postWrapper {
+    position: relative;
     margin: 2rem;
     padding: 0;
 
     width: 19rem;
     height: max-content;
 
-    overflow: hidden;
+    /*overflow: hidden;*/
+    overflow-x: auto;
+    overflow-y: scroll;
 }
 
 div.postWrapper:hover {
-    overflow-y: scroll;
 }
 
 div.post > h2 {
