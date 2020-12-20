@@ -1,5 +1,3 @@
-// input:checkbox 삽입
-
 let checked = [];
 
 let getCategory = document.getElementById('getCategory');
@@ -12,6 +10,7 @@ if (getCategory) { // 기존 게시글 수정 페이지면
     });
 }
 
+// input:checkbox 삽입
 document.querySelectorAll('td.catbox').forEach((td, i) => {
     let value = td.innerHTML;
     td.outerHTML = td.outerHTML.replace(/<\/td>/g, `<td><input type="checkbox" name="category" value="${value}"></td>`);

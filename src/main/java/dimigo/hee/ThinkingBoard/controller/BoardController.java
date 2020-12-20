@@ -42,10 +42,63 @@ public class BoardController
 
         model.addAttribute("mpInfo", mpInfo);
 
-        ArrayList<Boardpost> posts = boardService.findAllPosts();
+        ArrayList<Boardpost> posts = boardService.findAll();
         model.addAttribute("postList", posts);
 
         return "boardPostList";
+    }
+
+    @GetMapping("/posts/search")
+    public String search(
+            @ModelAttribute("mpInfo") ModPostInfo mpInfo,
+            Model model
+    ) {
+
+        model.addAttribute("mpInfo", mpInfo);
+
+        model.addAttribute("searchType", "title");
+
+        ArrayList<Boardpost> posts = boardService.findAll();
+        model.addAttribute("searchList", posts);
+
+        return "searchPost";
+    }
+
+    @PostMapping("/posts/search")
+    public String searchPost(
+            @ModelAttribute("mpInfo") ModPostInfo mpInfo,
+            String searchType,
+            String searchByCat,
+            String searchContent,
+            Model model
+    ) {
+
+        ArrayList<Boardpost> list = new ArrayList<>();
+
+        switch (searchType) {
+            case "id":
+                list = boardService.findByIdContain(searchContent);
+                break;
+            case "title":
+                list = boardService.findByTitleContain(searchContent);
+                break;
+            case "category":
+                list = boardService.findByCategoryContain(searchByCat);
+                break;
+            case "contents":
+                list = boardService.findByContentsContain(searchContent);
+                break;
+            default:
+                break;
+        }
+
+        model.addAttribute("mpInfo", mpInfo);
+
+        model.addAttribute("searchType", searchType);
+
+        model.addAttribute("searchList", list);
+
+        return "searchPost";
     }
 
     // Pass model attributes between Spring MVC controllers https://stackoverflow.com/a/17346284

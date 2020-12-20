@@ -1,0 +1,45 @@
+body {
+    font-weight: 200;
+}
+
+h1 {
+    color: var(--title);
+}
+
+h2 {
+    color: var(--p);
+    width: max-content;
+    margin: .5em 2em .5em 0;
+}
+
+div.searchType {
+    display: flex;
+    align-items: center;
+    box-shadow: none;
+    height: max-content;
+}
+
+input[type=text] {
+    font-size: 1em;
+    width: 32em;
+    margin: .5em;
+    padding: .8em;
+}
+
+button {
+    font-size: 1em;
+    font-weight: 200;
+    width: 5em; height: 2.7em;
+
+    margin: 0 .8em 0 0;
+    padding: 0;
+}
+
+#catboxes {
+    margin-top: .5em;
+    box-shadow: none;
+}
+
+#catboxes.dispNone, #searchContent.dispNone {
+    display: none;
+}

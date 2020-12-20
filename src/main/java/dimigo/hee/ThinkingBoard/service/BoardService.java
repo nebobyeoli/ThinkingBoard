@@ -32,11 +32,7 @@ public class BoardService
         return boardRepository.findById(id);
     }
 
-    public Boardpost findByTitle(String title) {
-        return boardRepository.findByTitle(title);
-    }
-
-    public ArrayList<Boardpost> findAllPosts() {
+    public ArrayList<Boardpost> findAll() {
         return boardRepository.findAll();
     }
 
@@ -55,6 +51,70 @@ public class BoardService
         boardPost.setPassword(post.getPassword());
 
         return this.register(boardPost);
+    }
+
+    public ArrayList<Boardpost> findByIdContain(String ids) {
+        if (ids.equals("")) return this.findAll();
+
+        String[] idsArr = ids.split(" ");
+        ArrayList<Boardpost> list = new ArrayList<>();
+
+        for (Boardpost post : this.findAll()) {
+            for (String id : idsArr)
+                if (Integer.toString(post.getId()).contains(id)) {
+                    list.add(post);
+                    break;
+                }
+        }
+        return list;
+    }
+
+    public ArrayList<Boardpost> findByTitleContain(String title) {
+        if (title.equals("")) return this.findAll();
+
+        String[] titleArr = title.split(" ");
+        ArrayList<Boardpost> list = new ArrayList<>();
+
+        for (Boardpost post : this.findAll()) {
+            for (String word : titleArr)
+                if (post.getTitle().contains(word)) {
+                    list.add(post);
+                    break;
+                }
+        }
+        return list;
+    }
+
+    public ArrayList<Boardpost> findByCategoryContain(String category) {
+        if (category == null) return this.findAll();
+
+        String[] catArr = category.split(",");
+        ArrayList<Boardpost> list = new ArrayList<>();
+
+        for (Boardpost post : this.findAll()) {
+            for (String cat : catArr)
+                if (post.getCategory().contains(cat)) {
+                    list.add(post);
+                    break;
+                }
+        }
+        return list;
+    }
+
+    public ArrayList<Boardpost> findByContentsContain(String contents) {
+        if (contents.equals("")) return this.findAll();
+
+        String[] contsArr = contents.split(" ");
+        ArrayList<Boardpost> list = new ArrayList<>();
+
+        for (Boardpost post : this.findAll()) {
+            for (String word : contsArr)
+                if (post.getContents().contains(word)) {
+                    list.add(post);
+                    break;
+                }
+        }
+        return list;
     }
 
     public Boardpost delete(Boardpost post) {
