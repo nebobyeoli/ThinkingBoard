@@ -76,16 +76,16 @@ public class BoardController
 
         switch (searchType) {
             case "id": // 게시글 #번호 로 검색
-                list = boardService.findByIdContain(searchContent);
+                list = boardService.findByIdContains(searchContent);
                 break;
             case "title": // 제목으로 검색
-                list = boardService.findByTitleContain(searchContent);
+                list = boardService.findByTitleContains(searchContent);
                 break;
             case "category": // 카테고리로 검색
-                list = boardService.findByCategoryContain(searchByCat);
+                list = boardService.findByCategoryContains(searchByCat);
                 break;
             case "contents": // 글 내용으로 검색
-                list = boardService.findByContentsContain(searchContent);
+                list = boardService.findByContentsContains(searchContent);
                 break;
             default:
                 break;

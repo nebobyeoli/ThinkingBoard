@@ -1,7 +1,15 @@
 package dimigo.hee.ThinkingBoard.controller;
 
-// 게시글 형식 - 폼 입력받는 틀용
-// PostForm과 Boardpost의 구체적 차이는 BoardService.java의 register 부분에 작성되어 있
+
+/** <h3> PostForm과 BoardPost의 차이 </h3>
+ *
+ * PostForm: category를 checkbox에서 String[]으로 받음 <br>
+ * Boardpost: category의 DB 저장을 위해 '/' 문자를 기준으로 String[] 형태를 join함 <br>
+ * <br>
+ * 입력 받을 때 String[] 말고 String 형태로 받으면 ',' 문자를 기준으로 자동 String 변환되지만, <br>
+ * 이 경우 카테고리에 ',' 문자를 사용할 수 없게 됨 - 기타 카테고리를 입력 받는 것을 가능하게 할 경우 등.. <br>
+ * 추후 '/'보다 빈도 낮은 문자 사용하는 것도 나쁘지 않은 방법임.
+ */
 public class PostForm
 {
     private String title; // 게시글 제목
@@ -28,9 +36,9 @@ public class PostForm
         // bp.setCategory(String.join("/", postForm.getCategory())); 설정
 
         // 세 번째 방법: BoardService.java > register 에서
-        // boardPost.setCategory(String.join("/", postForm.getCategory())); 설정
+        // bp.setCategory(String.join("/", postForm.getCategory())); 설정
 
-        // -- 0번째 방법: 그냥 입력받을 때부터 배열 말고 그냥 String으로 받는다 --
+        // -- 0번째 방법: 그냥 입력받을 때부터 배열 말고 그냥 String으로 받는다 (','로 구분되어 반환됨) --
     }
 
     public String getContents() {
