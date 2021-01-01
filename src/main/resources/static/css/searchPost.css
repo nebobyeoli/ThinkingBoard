@@ -40,6 +40,6 @@ button {
     box-shadow: none;
 }
 
-#catboxes.dispNone, #searchContent.dispNone {
+#catboxes.dispNone, #keywords.dispNone {
     display: none;
 }

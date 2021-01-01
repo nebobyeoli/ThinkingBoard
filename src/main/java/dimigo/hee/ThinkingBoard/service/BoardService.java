@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -40,6 +41,20 @@ public class BoardService
         return this.register(bp);
     }
 
+    /*** CONFIRM ***/
+
+    /**
+     * 비밀번호가 설정되지 않은 경우 (어떤 비밀번호를 넣어도 비밀번호가 일치한다고 간주) <br>
+     * 비밀번호가 일치하는 경우
+     * <pre>return true</pre>
+     */
+    public boolean hasPostofId(int id, String password) {
+        return boardRepository.hasPostofId(id, password);
+    }
+    public boolean hasPostofId(String id, String password) {
+        return boardRepository.hasPostofId(Integer.parseInt(id), password);
+    }
+
     /*** FIND ***/
 
     public ArrayList<Boardpost> findAll() {
@@ -53,67 +68,30 @@ public class BoardService
         return boardRepository.findById(Integer.parseInt(id));
     }
 
-    /** findBy ~ Contains : 공백 문자 (띄어쓰기)를 기준으로 <br>
-     * 각 "단어"가 모두 포함된 글 list를 findAll 결과에서 추려내어 반환.
-     */
-    public ArrayList<Boardpost> findByContainsId(String ids) {
-        if (ids.equals("")) return this.findAll();
-
-        String[] idsArr = ids.split(" ");
-        ArrayList<Boardpost> list = new ArrayList<>();
-
-        for (Boardpost bp : this.findAll()) {
-            int contains = 0;
-            for (String id : idsArr) if (Integer.toString(bp.getId()).toLowerCase(Locale.ROOT).contains(id.toLowerCase(Locale.ROOT))) contains++;
-            if (contains == idsArr.length) list.add(bp);
-        }
-        return list;
+    public ArrayList<Boardpost> findAllHasIds(String ids) {
+        return boardRepository.findAllHasIds(this.toKeyArr(ids, " "));
     }
 
-    public ArrayList<Boardpost> findByContainsTitle(String title) {
-        if (title.equals("")) return this.findAll();
+    public ArrayList<Boardpost> findAllHasTitles(String titles, String mode) {
+        return boardRepository.findAllHasTitles(this.toKeyArr(titles, " "), mode);
+    }
 
-        String[] titleArr = title.split(" ");
-        ArrayList<Boardpost> list = new ArrayList<>();
+    public ArrayList<Boardpost> findAllHasCategories(String categories, String mode) {
+        return boardRepository.findAllHasCategories(this.toKeyArr(categories, " "), mode);
+    }
 
-        for (Boardpost bp : this.findAll()) {
-            int contains = 0;
-            for (String word : titleArr) if (bp.getTitle().toLowerCase(Locale.ROOT).contains(word.toLowerCase(Locale.ROOT))) contains++;
-            if (contains == titleArr.length) list.add(bp);
-        }
-        return list;
+    public ArrayList<Boardpost> findAllHasContents(String contents, String mode) {
+        return boardRepository.findAllHasContents(this.toKeyArr(contents, ","), mode);
     }
 
     /**
-     * 카테고리로 검색: <br>
-     * 공백 대신 checkbox 자동변환 join 구분자인 ',' 문자를 기준으로 카테고리 분리.
+     * String to (distinct & !hasEmpty) StringArray
      */
-    public ArrayList<Boardpost> findByContainsCategory(String category) {
-        if (category == null) return this.findAll();
-
-        String[] catArr = category.split(",");
-        ArrayList<Boardpost> list = new ArrayList<>();
-
-        for (Boardpost bp : this.findAll()) {
-            int contains = 0;
-            for (String cat : catArr) if (bp.getCategory().toLowerCase(Locale.ROOT).contains(cat.toLowerCase(Locale.ROOT))) contains++;
-            if (contains == catArr.length) list.add(bp);
-        }
-        return list;
-    }
-
-    public ArrayList<Boardpost> findByContainsContents(String content) {
-        if (content.equals("")) return this.findAll();
-
-        String[] contsArr = content.split(" ");
-        ArrayList<Boardpost> list = new ArrayList<>();
-
-        for (Boardpost bp : this.findAll()) {
-            int contains = 0;
-            for (String word : contsArr) if (bp.getContent().toLowerCase(Locale.ROOT).contains(word.toLowerCase(Locale.ROOT))) contains++;
-            if (contains == contsArr.length) list.add(bp);
-        }
-        return list;
+    public String[] toKeyArr(String s, String regex) {
+        return Arrays.stream(s.split(regex))
+                .distinct() // no duplicates
+                .filter(v -> v != null && v.length() > 0)
+                .toArray(String[]::new);
     }
 
     /*** EDIT ***/
@@ -153,21 +131,6 @@ public class BoardService
     }
     public ModPostInfo editPost(String id, PostForm post) {
         return this.editPost(Integer.parseInt(id), post);
-    }
-
-    /*** CONFIRM ***/
-
-    /**
-     * return true: <br>
-     * - 비밀번호가 설정되지 않은 글은 어떤 비밀번호를 넣어도 비밀번호가 일치한다고 간주함 <br>
-     * - 비밀번호가 일치하는 경우
-     */
-    public boolean hasIdPost(int id, String password) {
-        Boardpost bp = this.findById(id);
-        return (bp.getPassword() != null) || bp.getPassword().equals(password);
-    }
-    public boolean hasIdPost(String id, String password) {
-        return this.hasIdPost(Integer.parseInt(id), password);
     }
 
     /*** DELETE ***/

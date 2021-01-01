@@ -25,6 +25,8 @@ public class JPABoardRepository implements BoardRepository
         em.persist(bp);
     }
 
+    /*** CONFIRM ***/
+
     /*** FIND ***/
 
     @Override
@@ -37,6 +39,41 @@ public class JPABoardRepository implements BoardRepository
         String ql = "SELECT bp FROM Boardpost bp";
         return (ArrayList<Boardpost>) em.createQuery(ql, Boardpost.class).getResultList();
     }
+
+    @Override
+    public boolean hasPostofId(int id, String password) {
+        Boardpost bp = this.findById(id);
+        return (bp.getPassword() != null) || bp.getPassword().equals(password);
+    }
+
+    @Override
+    public ArrayList<Boardpost> findAllHasIds(String[] idList) {
+        String ql = "SELECT bp FROM Boardpost bp WHERE bp.id = :id";
+        return (ArrayList<Boardpost>) em.createQuery(ql, Boardpost.class).setParameter("id", idList[0]).getResultList();
+    }
+
+    @Override
+    public ArrayList<Boardpost> findAllHasTitles(String[] titleList, String mode) {
+        StringBuffer ql = new StringBuffer("SELECT bp FROM Boardpost bp");
+        for (String title : titleList) ql.append(String.format(" %s bp.title LIKE '%%%s%%'", title.equals(titleList[0]) ? "WHERE" : mode, title));
+        return (ArrayList<Boardpost>) em.createQuery(ql.toString(), Boardpost.class).getResultList();
+    }
+
+    @Override
+    public ArrayList<Boardpost> findAllHasCategories(String[] catList, String mode) {
+        StringBuffer ql = new StringBuffer("SELECT bp FROM Boardpost bp");
+        for (String cat : catList) ql.append(String.format(" %s bp.category LIKE '%%%s%%'", cat.equals(catList[0]) ? "WHERE" : mode, cat));
+        return (ArrayList<Boardpost>) em.createQuery(ql.toString(), Boardpost.class).getResultList();
+    }
+
+    @Override
+    public ArrayList<Boardpost> findAllHasContents(String[] contList, String mode) {
+        StringBuffer ql = new StringBuffer("SELECT bp FROM Boardpost bp");
+        for (String cont : contList) ql.append(String.format(" %s bp.content LIKE '%%%s%%'", cont.equals(contList[0]) ? "WHERE" : mode, cont));
+        return (ArrayList<Boardpost>) em.createQuery(ql.toString(), Boardpost.class).getResultList();
+    }
+
+    /*** EDIT ***/
 
     /*** DELETE ***/
 

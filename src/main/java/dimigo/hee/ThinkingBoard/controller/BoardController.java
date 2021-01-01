@@ -73,8 +73,8 @@ public class BoardController
     public String searchPost(
             @ModelAttribute("mpInfo") ModPostInfo mpInfo,
             String searchType,
-            String searchByCat,
-            String searchContent,
+            String keycats,
+            String keywords,
             Model model
     ) {
 
@@ -82,16 +82,16 @@ public class BoardController
 
         switch (searchType) {
             case "id": // 게시글 #번호 로 검색
-                list = boardService.findByContainsId(searchContent);
+                list = boardService.findAllHasIds(keywords);
                 break;
             case "title": // 제목으로 검색
-                list = boardService.findByContainsTitle(searchContent);
+                list = boardService.findAllHasTitles(keywords, "AND");
                 break;
             case "category": // 카테고리로 검색
-                list = boardService.findByContainsCategory(searchByCat);
+                list = boardService.findAllHasCategories(keycats, "AND");
                 break;
             case "content": // 글 내용으로 검색
-                list = boardService.findByContainsContents(searchContent);
+                list = boardService.findAllHasContents(keywords, "AND");
                 break;
             default:
                 break;
@@ -123,7 +123,7 @@ public class BoardController
         mpInfo.setId(id);
         mpInfo.setModType("edit");
 
-        boolean hasId = boardService.hasIdPost(id, password);
+        boolean hasId = boardService.hasPostofId(id, password);
         String redirect;
 
         if (!hasId) { // 비밀번호 틀리셨어요~
@@ -167,7 +167,7 @@ public class BoardController
         mpInfo.setId(id);
         mpInfo.setModType("delete");
 
-        boolean hasId = boardService.hasIdPost(id, password);
+        boolean hasId = boardService.hasPostofId(id, password);
 
         if (!hasId) {
             mpInfo.setResult("fail");

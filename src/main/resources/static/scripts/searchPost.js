@@ -13,7 +13,7 @@ document.querySelectorAll('input[type=radio][name=searchType]').forEach(radio =>
 // input:checkbox 삽입
 document.querySelectorAll('td.catbox').forEach((td, i) => {
     let value = td.innerHTML;
-    td.outerHTML = td.outerHTML.replace(/<\/td>/g, `<td><input type="checkbox" name="searchByCat" value="${value}"></td>`);
+    td.outerHTML = td.outerHTML.replace(/<\/td>/g, `<td><input type="checkbox" name="keycats" value="${value}"></td>`);
     if (td.classList.contains('checked')) checked.push(i);
 });
 
@@ -24,13 +24,13 @@ document.querySelectorAll('table.catboxes input[type=checkbox]').forEach((check,
 function displayCatbox() {
     if (catboxVisible) return;
     document.getElementById('catboxes').classList.remove('dispNone');
-    document.getElementById('searchContent').classList.add('dispNone');
+    document.getElementById('keywords').classList.add('dispNone');
     catboxVisible = true;
 }
 
-function displaySearchContent() {
+function displayKeywords() {
     if (!catboxVisible) return;
     document.getElementById('catboxes').classList.add('dispNone');
-    document.getElementById('searchContent').classList.remove('dispNone');
+    document.getElementById('keywords').classList.remove('dispNone');
     catboxVisible = false;
 }

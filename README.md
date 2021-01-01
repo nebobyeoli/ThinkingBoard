@@ -114,3 +114,32 @@ div {
 ```
 > `end`
 </details>
+
+<details>
+<summary>
+
+#### How to `MySQL` `search` `case sensitivity`
+
+</summary>
+<h4><i>(but not really)</i></h4>
+
+```mysql
+ALTER TABLE `dimigo`.`boardpost`
+MODIFY COLUMN title VARCHAR(200) CHARACTER SET euckr, COLLATE = euckr_korean_ci,
+MODIFY COLUMN content VARCHAR(1000) CHARACTER SET euckr, COLLATE = euckr_korean_ci;
+
+-- cs = case sensitive, ci = case insentive
+-- ( >> theoretically << )
+
+-- going back to euckr_bin doesn't really work in workbench
+--                         ^^^^^^^
+ALTER TABLE `dimigo`.`boardpost`
+MODIFY COLUMN content VARCHAR(1000) CHARACTER SET euckr, COLLATE = euckr_bin;
+
+-- or something
+
+ALTER TABLE `dimigo`.`boardpost`
+MODIFY COLUMN content VARCHAR(1000) CHARACTER SET euckr, COLLATE = utf8mb4_0900_as_cs;
+```
+> `end`
+</details>

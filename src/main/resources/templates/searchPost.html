@@ -20,10 +20,10 @@
             <h2>검색 기준 선택</h2>
             <!--/*@thymesVar id="searchType" type="java.lang.String"*/-->
             <p id="searchType" th:value="${searchType}" style="display: none;"></p>
-            #번째 <input type="radio" name="searchType" value="id" onclick="displaySearchContent()">
-            제목 <input type="radio" name="searchType" value="title" onclick="displaySearchContent()">
+            #번째 <input type="radio" name="searchType" value="id" onclick="displayKeywords()">
+            제목 <input type="radio" name="searchType" value="title" onclick="displayKeywords()">
             카테고리 <input type="radio" name="searchType" value="category" onclick="displayCatbox()">
-            내용 <input type="radio" name="searchType" value="content" onclick="displaySearchContent()">
+            내용 <input type="radio" name="searchType" value="content" onclick="displayKeywords()">
         </div>
 
         <div class="formarea category dispNone" id="catboxes">
@@ -53,7 +53,7 @@
             </table>
         </div>
 
-        <input type="text" name="searchContent" id="searchContent" placeholder="검색어는 공백 문자로 구분합니다. 검색어가 없으면 모든 글이 검색됩니다.">
+        <input type="text" name="keywords" id="keywords" placeholder="검색어는 공백 문자로 구분합니다. 검색어가 없으면 모든 글이 검색됩니다.">
         <button type="submit">검색</button>
     </form>
 </div>

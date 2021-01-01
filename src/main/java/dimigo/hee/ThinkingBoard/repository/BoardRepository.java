@@ -9,11 +9,22 @@ public interface BoardRepository
 
     void save(Boardpost bp);
 
+    /*** CONFIRM ***/
+
     /*** FIND ***/
 
     Boardpost findById(int id);
 
     ArrayList<Boardpost> findAll();
+
+    boolean hasPostofId(int id, String password);
+
+    ArrayList<Boardpost> findAllHasIds(String[] idList); // "poetic license"; uniform `has`
+    ArrayList<Boardpost> findAllHasTitles(String[] titleList, String mode);
+    ArrayList<Boardpost> findAllHasCategories(String[] catList, String mode);
+    ArrayList<Boardpost> findAllHasContents(String[] contList, String mode);
+
+    /*** EDIT ***/
 
     /*** DELETE ***/
 
