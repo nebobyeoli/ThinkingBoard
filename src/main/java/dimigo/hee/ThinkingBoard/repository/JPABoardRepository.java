@@ -13,6 +13,8 @@ public class JPABoardRepository implements BoardRepository
         this.em = em;
     }
 
+    /*** SAVE ***/
+
     /**
      * JPA 기본 (쿼리날림) 함수 사용 <br>
      * save, findById = DB 기본제공함수 <br>
@@ -22,6 +24,8 @@ public class JPABoardRepository implements BoardRepository
     public void save(Boardpost bp) {
         em.persist(bp);
     }
+
+    /*** FIND ***/
 
     @Override
     public Boardpost findById(int id) {
@@ -33,6 +37,8 @@ public class JPABoardRepository implements BoardRepository
         String ql = "SELECT bp FROM Boardpost bp";
         return (ArrayList<Boardpost>) em.createQuery(ql, Boardpost.class).getResultList();
     }
+
+    /*** DELETE ***/
 
     @Override
     public void deleteById(int id) {

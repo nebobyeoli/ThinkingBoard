@@ -5,16 +5,17 @@ import java.util.ArrayList;
 
 public interface BoardRepository
 {
+    /*** SAVE ***/
+
     void save(Boardpost bp);
+
+    /*** FIND ***/
 
     Boardpost findById(int id);
 
-    /**
-     * 모든 Boardpost 반환 <br>
-     * boardService의 기본 외 함수들은 <br>
-     * findAll, findById에서 반환된 ArrayList<Boardpost> 데이터를 이용하여 실행됨
-     */
     ArrayList<Boardpost> findAll();
+
+    /*** DELETE ***/
 
     void deleteById(int id);
 }

@@ -5,8 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-// 게시글 형식 - DB 저장용
-// PostForm과 Boardpost의 구체적 차이는 BoardService.java의 register 부분에 작성되어 있
+/**
+ * 게시글 형식 - DB 저장용 <br>
+ * PostForm과의 구체적 차이는 PostForm.java에 있음
+ */
 @Entity
 public class Boardpost
 {

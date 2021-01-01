@@ -23,12 +23,18 @@ public class BoardController
         this.boardService = boardService;
     }
 
-    @GetMapping("/posts/new") // GET 으로의 "/post/new"는 등록 폼으로 이동
+    /**
+     * GET으로의 "/post/new"는 등록 폼으로 이동
+     */
+    @GetMapping("/posts/new")
     public String register() {
         return "registerPost"; // 게시글 입력 뷰 파일로 이동
     }
 
-    @PostMapping("/posts/new") // POST 로의 "/posts/new"는 SUBMIT 저장 진행
+    /**
+     * POST로의 "/post/new"는 SUBMIT 저장 진행
+     */
+    @PostMapping("/posts/new")
     public String registerPost(PostForm post) {
         boardService.register(post);
         return "redirect:/posts"; // 게시글 목록 뷰 파일로 이동
@@ -76,16 +82,16 @@ public class BoardController
 
         switch (searchType) {
             case "id": // 게시글 #번호 로 검색
-                list = boardService.findByIdContains(searchContent);
+                list = boardService.findByContainsId(searchContent);
                 break;
             case "title": // 제목으로 검색
-                list = boardService.findByTitleContains(searchContent);
+                list = boardService.findByContainsTitle(searchContent);
                 break;
             case "category": // 카테고리로 검색
-                list = boardService.findByCategoryContains(searchByCat);
+                list = boardService.findByContainsCategory(searchByCat);
                 break;
             case "contents": // 글 내용으로 검색
-                list = boardService.findByContentsContains(searchContent);
+                list = boardService.findByContainsContents(searchContent);
                 break;
             default:
                 break;
@@ -98,7 +104,13 @@ public class BoardController
         return "searchPost";
     }
 
-    // Pass model attributes between Spring MVC controllers https://stackoverflow.com/a/17346284
+    /**
+     * <h2>
+     * <a href="https://stackoverflow.com/a/17346284">
+     *     Pass model attributes between Spring MVC controllers
+     * </a>
+     * </h2>
+     */
     @PostMapping("/posts/editPost")
     public String editOnePost(
             int id,
@@ -111,25 +123,28 @@ public class BoardController
         mpInfo.setId(id);
         mpInfo.setModType("edit");
 
-        Boardpost matchPost = boardService.getMatchingPost(id, password);
+        boolean hasId = boardService.hasIdPost(id, password);
         String redirect;
 
-        if (matchPost == null) { // 비밀번호 틀리셨어요~
+        if (!hasId) { // 비밀번호 틀리셨어요~
             mpInfo.setResult("fail");
             redirAttributes.addFlashAttribute("mpInfo", mpInfo);
             redirect = "redirect:/posts"; // 돌아가세요~
         }
         else { // 비밀번호 맞으셨어요~
             mpInfo.setResult("done");
-            model.addAttribute("post", matchPost);
+            model.addAttribute("post", boardService.findById(id));
             redirect = "editPost"; // 글 수정 가능합니다~
         }
 
         return redirect;
     }
 
-    @PostMapping("/posts/editPost/submit") // submit된 폼 데이터를 받아 query >> update 수행
-    public String editPostSubmit( // @Entity 설정된 Boardpost의 setter 함수들 이용
+    /**
+     * submit된 폼 데이터를 받아 query → update 수행
+     */
+    @PostMapping("/posts/editPost/submit")
+    public String editPostSubmit(
             int id,
             PostForm post,
             RedirectAttributes redirAttributes
@@ -152,14 +167,14 @@ public class BoardController
         mpInfo.setId(id);
         mpInfo.setModType("delete");
 
-        Boardpost matchPost = boardService.getMatchingPost(id, password);
+        boolean hasId = boardService.hasIdPost(id, password);
 
-        if (matchPost == null) {
+        if (!hasId) {
             mpInfo.setResult("fail");
         }
         else {
             mpInfo.setResult("done");
-            boardService.delete(matchPost);
+            boardService.deleteById(id);
         }
 
         redirAttributes.addFlashAttribute("mpInfo", mpInfo);

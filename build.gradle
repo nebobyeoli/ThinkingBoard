@@ -1,8 +1,9 @@
-/* How to kill intellij localhost after disconnect:
- > cmd
- * netstat -aon | find "8888"
- * taskkill /f /pid tasknum
- * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/**
+ ** How to kill intellij localhost after disconnect:
+ ** > cmd
+ ** netstat -aon | find "8888"
+ ** taskkill /f /pid tasknum
+ **/
 
 plugins {
 	id "org.springframework.boot" version "2.4.0"
