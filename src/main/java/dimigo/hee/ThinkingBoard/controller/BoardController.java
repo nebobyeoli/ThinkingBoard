@@ -90,7 +90,7 @@ public class BoardController
             case "category": // 카테고리로 검색
                 list = boardService.findByContainsCategory(searchByCat);
                 break;
-            case "contents": // 글 내용으로 검색
+            case "content": // 글 내용으로 검색
                 list = boardService.findByContainsContents(searchContent);
                 break;
             default:

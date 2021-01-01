@@ -41,7 +41,7 @@ validate.all = function () {
     validate.isValid = true;
     validate.title();
     validate.category();
-    validate.contents();
+    validate.content();
     validate.password();
     return validate.isValid;
 };
@@ -64,10 +64,10 @@ validate.category = function () {
     return validate.isValid === true;
 }
 
-validate.contents = function () {
-    let contents = document.querySelector('textarea[name=contents]').value;
-    if (contents == '') {
-        validate.invalPrint('contents', '내용을 입력해 주세요.');
+validate.content = function () {
+    let content = document.querySelector('textarea[name=content]').value;
+    if (content == '') {
+        validate.invalPrint('content', '내용을 입력해 주세요.');
         return validate.isValid = false;
     }
     return validate.isValid === true;

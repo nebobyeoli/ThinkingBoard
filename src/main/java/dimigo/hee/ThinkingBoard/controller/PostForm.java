@@ -14,7 +14,7 @@ public class PostForm
 {
     private String title; // 게시글 제목
     private String category; // 해당하는 카테고리
-    private String contents; // 게시글 내용
+    private String content; // 게시글 내용
     private String password; // 게시글 비밀번호
 
     public String getTitle() {
@@ -44,12 +44,12 @@ public class PostForm
         this.category = String.join("/", category);
     }
 
-    public String getContents() {
-        return contents;
+    public String getContent() {
+        return content;
     }
 
-    public void setContents(String contents) {
-        this.contents = contents;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getPassword() {

@@ -35,7 +35,7 @@ public class BoardService
         Boardpost bp = new Boardpost(); // 새 게시글: 데이터 저장 형식으로 자동 변환하여 저장해 줌
         bp.setTitle(post.getTitle());
         bp.setCategory(post.getCategory());
-        bp.setContents(post.getContents());
+        bp.setContent(post.getContent());
         bp.setPassword(post.getPassword());
         return this.register(bp);
     }
@@ -102,15 +102,15 @@ public class BoardService
         return list;
     }
 
-    public ArrayList<Boardpost> findByContainsContents(String contents) {
-        if (contents.equals("")) return this.findAll();
+    public ArrayList<Boardpost> findByContainsContents(String content) {
+        if (content.equals("")) return this.findAll();
 
-        String[] contsArr = contents.split(" ");
+        String[] contsArr = content.split(" ");
         ArrayList<Boardpost> list = new ArrayList<>();
 
         for (Boardpost bp : this.findAll()) {
             int contains = 0;
-            for (String word : contsArr) if (bp.getContents().toLowerCase(Locale.ROOT).contains(word.toLowerCase(Locale.ROOT))) contains++;
+            for (String word : contsArr) if (bp.getContent().toLowerCase(Locale.ROOT).contains(word.toLowerCase(Locale.ROOT))) contains++;
             if (contains == contsArr.length) list.add(bp);
         }
         return list;
@@ -135,8 +135,8 @@ public class BoardService
             editedPost.setCategory(post.getCategory());
             edited = true;
         }
-        if (!editedPost.getContents().equals(post.getContents())) {
-            editedPost.setContents(post.getContents());
+        if (!editedPost.getContent().equals(post.getContent())) {
+            editedPost.setContent(post.getContent());
             edited = true;
         }
         if (editedPost.getPassword().equals("") && !post.getPassword().equals("")) {

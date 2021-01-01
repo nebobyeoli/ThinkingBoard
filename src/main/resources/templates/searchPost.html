@@ -23,7 +23,7 @@
             #번째 <input type="radio" name="searchType" value="id" onclick="displaySearchContent()">
             제목 <input type="radio" name="searchType" value="title" onclick="displaySearchContent()">
             카테고리 <input type="radio" name="searchType" value="category" onclick="displayCatbox()">
-            내용 <input type="radio" name="searchType" value="contents" onclick="displaySearchContent()">
+            내용 <input type="radio" name="searchType" value="content" onclick="displaySearchContent()">
         </div>
 
         <div class="formarea category dispNone" id="catboxes">
@@ -75,7 +75,7 @@
             <h2 th:text="'#' + ${post.getId()} + '번째 생각'" name="post-id"></h2>
             <h3 th:text="${post.getTitle()}" name="post-title"></h3>
             <span th:text="${post.getCategory()}" name="post-category"></span>
-            <p th:text="${post.getContents()}" name="post-contents"></p>
+            <p th:text="${post.getContent()}" name="post-content"></p>
         </div>
     </div>
 
